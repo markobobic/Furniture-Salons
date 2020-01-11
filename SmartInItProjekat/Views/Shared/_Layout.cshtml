@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Furniture Salons</title>
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/Navbar.css")
+    @Scripts.Render("~/bundles/modernizr")
+
+
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-blue navbar navbar-default navbar-fixed-top">
+        <a class="navbar-brand title" href="/"> <img width="90" height="80" src="~/Content/Images/logo.png" alt="logo"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02"
+                aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarColor02">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    @Html.ActionLink("Home", "Index", "Home",
+               new { area = "" }, new { @class = "nav-link" })
+                </li>
+                <li class="nav-item">
+                    @Html.ActionLink("Contact", "Contact", "Home",
+               new { area = "" }, new { @class = "nav-link" })
+                </li>
+
+            </ul>
+            @Html.Partial("NavBarPartial")
+            @Html.Partial("_LoginPartial")
+        </div>
+
+    </nav><br />
+    <div class="container-fluid">
+        @RenderSection("containerFluid", required: false)
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <div class="container-fluid">
+                @RenderSection("containerFluidTwo", required: false)
+            </div>
+            <p class="d-flex justify-content-center">&copy; @DateTime.Now.Year - Furniture Salons</p>
+        </footer>
+    </div>
+    
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

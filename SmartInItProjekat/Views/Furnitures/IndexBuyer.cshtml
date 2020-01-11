@@ -1,0 +1,114 @@
+﻿
+@{
+    ViewBag.Title = "List Of Furniture Pieces";
+}
+
+<h2>Furniture</h2>
+
+<div class="modal fade" id="modalAdd" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="mTitle">Furniture</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div style="width:1250px">
+    <table id="Table" class="table table-striped">
+        <thead>
+            <tr>
+                <th>Code</th>
+                <th>Name</th>
+                <th>Origin</th>
+                <th>Year Made</th>
+                <th>Category</th>
+                <th>Shop</th>
+                <th>Quantity</th>
+                <th>Price</th>
+
+            </tr>
+        </thead>
+        <tfoot style="display:table-header-group">
+            <tr>
+                <th></th>
+                <th class="searchable">Name</th>
+                <th class="searchable">Origin</th>
+                <th class="searchable">Year Made</th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th class="searchable">Price</th>
+            </tr>
+        </tfoot>
+        <tbody class="table table-bordered"></tbody>
+    </table>
+</div>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+@section scripts{
+
+    <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.21.0/moment.min.js"></script>
+    <script>
+        var Popup, dataTable;
+        $(document).ready(function () {
+            dataTable = $("#Table").DataTable({
+                "ajax": {
+                    "url": "/Furnitures/GetData/",
+                    "type": "GET",
+                    "datatype": "json",
+                    "dataSrc": ""
+                },
+                "columns": [
+                    { "data": "Code" },
+                    { "data": "Name" },
+                    { "data": "CountryOfOrigin" },
+                    { "data": "Year" },
+                    { "data": "Category" },
+                    { "data": "FurnitureSalon" },
+                    { "data": "Amount" },
+                    { "data": "Price" },
+                ],
+                "language": {
+                    "emptyTable": "No data found",
+                },
+                "responsive": true,
+                "dom": 'lrtip'
+            });
+
+            $('.searchable').each(function () {
+                var title = $('#Table thead th').eq($(this).index()).text();
+                $(this).html('<input type="text" placeholder="Search ' + title + '" size="12"/>')
+            });
+
+            dataTable.columns().every(function () {
+                var datatableColumn = this;
+
+                $(this.footer()).find('input').on('keyup change', function () {
+                    datatableColumn.search(this.value).draw();
+                });
+            })
+        });
+        function PopupForm(url) {
+            var formDiv = $('.modal-body');
+            $.get(url)
+                .done(function (response) {
+                    var modal = $(this);
+                    formDiv.html(response);
+                });
+        }
+    </script>
+
+}
+

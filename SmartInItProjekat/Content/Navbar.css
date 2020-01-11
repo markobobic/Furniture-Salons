@@ -1,0 +1,48 @@
+﻿
+.navbar-dark .nav-item.active .nav-link,
+.navbar-dark .nav-item:focus .nav-link,
+.navbar-dark .nav-item:hover .nav-link {
+    color: darkred;
+}
+.bg-blue {
+    background-color: #28AE7B;
+}
+.pagination_button {
+    display: inline-block;
+}
+input, select, textarea {
+    max-width: 280px;
+}
+
+td {
+    max-width: 100px !important;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+html, body {
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+}
+.carousel-item {
+    height: 100vh;
+    min-height: 350px;
+    background: no-repeat center center scroll;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+body:not(.modal-open) {
+    padding-right: 0px !important;
+}
+.lead{
+    color:black;
+}
+
+
+
+

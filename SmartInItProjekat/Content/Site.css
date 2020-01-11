@@ -1,0 +1,290 @@
+﻿html, body {
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+}
+*{
+    box-sizing: border-box
+}
+
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+
+input {
+    max-width: 280px;
+}
+select {
+    max-width: 280px;
+}
+textarea {
+    max-width: 280px;
+}
+
+.dropdown:hover .dropdown-menu {
+    display: block !important;
+}
+
+
+#Table_paginate {
+    display: inline-block;
+    padding: 0px;
+    margin: 0px;
+    float: right;
+}
+
+hr {
+    border-color: darkgray;
+    float: none;
+    clear: both;
+}
+
+#Table_paginate a {
+    color: #28AE7B;
+    line-height: 60px;
+    padding: 10px 15px;
+    text-decoration: none;
+    border: 1px solid #28AE7B;
+    text-align: center;
+    border-radius: 10px;
+    transition: background-color .5s;
+}
+
+    #Table_paginate a.active {
+        background-color: lightblue;
+        color: lightblue;
+        border-radius: 10px;
+    }
+
+    #Table_paginate a:hover:not(.active) {
+        background-color: lightgray;
+    }
+.modal-backdrop {
+    width: 100% !important;
+    height: 100% !important;
+}
+body {
+    -moz-transform: scale(0.8, 0.8); /* Moz-browsers */
+    zoom: 0.8; /* Other non-webkit browsers */
+    zoom: 80%; /* Webkit browsers */
+}
+
+
+.carousel, .item, .active {
+    height: 100%;
+}
+
+.carousel-inner {
+    height: 100%;
+}
+
+.carousel {
+    margin-bottom: 60px;
+}
+
+.carousel-caption {
+    z-index: 10;
+}
+
+.carousel .item {
+    background-color: #777;
+}
+
+.carousel .carousel-inner .bg {
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.carousel, .item, .active {
+    height: 100%;
+}
+
+.carousel-inner {
+    height: 100%;
+}
+
+.carousel {
+    margin-bottom: 60px;
+}
+
+.carousel-caption {
+    z-index: 10;
+}
+
+.carousel .item {
+    background-color: #777;
+}
+
+.carousel .carousel-inner .bg {
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.display-4 {
+    color: #28AE7B;
+}
+
+/*Slide show for index*/
+#slideshow {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    width: 100%;
+    height: 800px;
+    display: inline-block;
+}
+
+.elemnt, .elemnt1, .elemnt2, .elemnt3, .elemnt4, .elemnt5 {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 800px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: inline-block;
+    text-align: center;
+}
+
+.links {
+    z-index: 10;
+    position: absolute;
+    text-align: center;
+    color: #28AE7B;
+    font-size: 50px;
+    font-weight: bold;
+}
+
+.slides {
+    box-shadow: 0 0 5px 0 hsla(0,0%,30%, .3);
+    background-color: burlywood;
+    position: center;
+    text-align: center;
+}
+.elemnt5 {
+    animation: xfade5 16s 18s infinite;
+    background-image: url('https://www.cakeboxacademy.com/wp-content/uploads/2015/12/happycustomer.jpg');
+}
+.elemnt4 {
+    animation: xfade4 16s 16s infinite;
+    background-image: url('https://justcreative.com/wp-content/uploads/2019/02/boss-sly.jpg');
+}
+
+.elemnt {
+    animation: xfade 16s 12s infinite;
+    background-image: url('/Content/Images/FurnitureSalon1.jpg');
+}
+
+.elemnt1 {
+    animation: xfade1 16s 8s infinite;
+    background-image: url('/Content/Images/FurnitureSalon5.jpg');
+}
+
+.elemnt2 {
+    animation: xfade2 16s 4s infinite;
+    background-image: url('/Content/Images/FurnitureSalon3.jpg');
+}
+
+.elemnt3 {
+    animation: xfade3 16s 0s infinite;
+    background-image: url('/Content/Images/FurnitureSalon4.jpg');
+}
+
+
+
+
+@keyframes xfade {
+    17% {
+        opacity: 1;
+    }
+
+    25% {
+        opacity: 0;
+    }
+
+    92% {
+        opacity: 0;
+    }
+}
+
+@keyframes xfade1 {
+    17% {
+        opacity: 1;
+    }
+
+    25% {
+        opacity: 0;
+    }
+
+    92% {
+        opacity: 0;
+    }
+}
+
+@keyframes xfade2 {
+    17% {
+        opacity: 1;
+    }
+
+    25% {
+        opacity: 0;
+    }
+
+    92% {
+        opacity: 0;
+    }
+}
+
+@keyframes xfade3 {
+    17% {
+        opacity: 1;
+    }
+
+    25% {
+        opacity: 0;
+    }
+
+    92% {
+        opacity: 0;
+    }
+}
+
+@keyframes xfade4 {
+    17% {
+        opacity: 1;
+    }
+
+    25% {
+        opacity: 0;
+    }
+
+    92% {
+        opacity: 0;
+    }
+}
+@keyframes xfade5 {
+    17% {
+        opacity: 1;
+    }
+
+    25% {
+        opacity: 0;
+    }
+
+    92% {
+        opacity: 0;
+    }
+}

@@ -1,0 +1,10 @@
+﻿.elemnt, .elemnt1, .elemnt2, .elemnt3, .elemnt4, .elemnt5 {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: inline-block;
+    text-align: center;
+}

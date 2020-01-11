@@ -1,0 +1,35 @@
+﻿@using Microsoft.AspNet.Identity
+
+
+@section containerFluid
+{
+    @if (Request.IsAuthenticated)
+    {
+        if (User.IsInRole("Admin"))
+        {
+
+            <div id="slideshow">
+                <div class="elemnt"><a class="links" href="/FurnitureSalons"><span class="slides">Check all of our salons!</span></a></div>
+                <div class="elemnt1"><a class="links" href="/FurnitureSalons"><span class="slides">Check all of our salons!</span></a></div>
+                <div class="elemnt2"><a class="links" href="/Furnitures"><span class="slides">Check all furnitures. We hope you have a good buy!</span></a></div>
+                <div class="elemnt3"><a class="links" href="/Furnitures"><span class="slides">Check all furnitures. We hope you have a good buy!</span></a></div>
+                <div class="elemnt4"><a class="links" href="/FurnitureSalons"><span class="slides"> Welcome boss @User.Identity.Name</span></a></div>
+            </div>
+        }
+    }
+  @if (User.IsInRole("Buyer"))
+    {
+<div id="slideshow">
+
+    <div class="elemnt2"><a class="links" href="/Furnitures"><span class="slides">Check all furnitures. We hope you have a good buy!</span></a></div>
+    <div class="elemnt3"><a class="links" href="/Furnitures"><span class="slides">Check all furnitures. We hope you have a good buy!</span></a></div>
+    <div class="elemnt"><a class="links" href="/FurnitureSalons"><span class="slides">Check all of our salons!</span></a></div>
+    <div class="elemnt1"><a class="links" href="/FurnitureSalons"><span class="slides">Check all of our salons!</span></a></div>
+    <div class="elemnt5"><a class="links" href="/Furnitures"><span class="slides"> Good day customer @User.Identity.Name!</span></a></div>
+</div>
+    }
+}
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.slim.min.js"></script>
+<link rel="stylesheet" href="~/Content/bootstrap-minty.min.css">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
