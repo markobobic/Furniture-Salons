@@ -33,13 +33,6 @@ textarea {
 }
 
 
-#Table_paginate {
-    display: inline-block;
-    padding: 0px;
-    margin: 0px;
-    float: right;
-}
-
 hr {
     border-color: darkgray;
     float: none;
@@ -48,20 +41,24 @@ hr {
 
 #Table_paginate a {
     color: #28AE7B;
-    line-height: 60px;
+    line-height: 65px;
     padding: 10px 15px;
     text-decoration: none;
-    border: 1px solid #28AE7B;
+    border: 1px solid gray;
     text-align: center;
     border-radius: 10px;
     transition: background-color .5s;
 }
-
-    #Table_paginate a.active {
-        background-color: lightblue;
-        color: lightblue;
-        border-radius: 10px;
-    }
+#Table_info {
+    font-weight: bold;
+    color: black;
+   
+}
+#Table_paginate a.active {
+    background-color: lightblue;
+    color: lightblue;
+    border-radius: 10px;
+}
 
     #Table_paginate a:hover:not(.active) {
         background-color: lightgray;
@@ -104,8 +101,9 @@ body {
 
 html, body {
     height: 100%;
-    margin: 0;
-    padding: 0;
+    margin: 0px;
+    padding: 0px;
+    background-size: 100%;
 }
 
 .carousel, .item, .active {
@@ -158,6 +156,17 @@ html, body {
     display: inline-block;
     text-align: center;
 }
+
+input[type="search"] {
+    border: 1px solid grey;
+    border-radius: 5px;
+    height: 26px;
+    width: 100%;
+    padding: 2px 23px 2px 30px;
+    outline: 0;
+    background-color: #f5f5f5;
+}
+
 
 .links {
     z-index: 10;

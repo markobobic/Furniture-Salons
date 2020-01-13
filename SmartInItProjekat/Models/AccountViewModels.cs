@@ -87,7 +87,7 @@ namespace SmartInItProjekat.Models
 
         [Required]
         [Display(Name = "User Name")]
-       // [System.Web.Mvc.Remote("DoesUserNameExist", "Users", ErrorMessage = "User Name already exists!")]
+       [System.Web.Mvc.Remote("DoesUserNameExist", "Users", ErrorMessage = "User Name already exists!")]
         public string UserName { get; set; }
 
         [Required]

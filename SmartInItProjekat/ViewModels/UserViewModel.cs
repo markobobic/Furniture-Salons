@@ -8,7 +8,6 @@ namespace SmartInItProjekat.ViewModels
 {
     public class UserViewModel
     {
-
         public string Id { get; set; }
 
         [Display(Name = "User name")]
