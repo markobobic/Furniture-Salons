@@ -1,12 +1,26 @@
-﻿
+﻿@model SmartInItProjekat.Models.FurnitureSalon
 @{
     /**/
 
     ViewBag.Title = "List Of Salons";
 }
+<div class="col-sm-12">
+    @Html.ValidationSummary(true)
+    @if (TempData["SuccessMsg"] != null)
+    {
+        <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+        <script>
+                $(document).ready(function(){
+              $('#user_content').load('@Url.Action("PopUpAdd","Home")');
+                    });
+        </script>
+    }
 
+
+
+
+</div>
 <h2>Furniture salons</h2>
-
 <div class="modal fade" id="modalAdd" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -27,7 +41,7 @@
 <a class="btn btn-success" style="margin-bottom:10px;color:white" data-toggle="modal"
    data-target="#modalAdd"
    onclick="PopupForm('@Url.Action("Add","FurnitureSalons")')"><i class="fa fa-plus"></i> Add New</a>
-
+<div id="user_content"></div>
 <div style="width:1250px">
     <table id="Table" class="table table-striped">
         <thead>
@@ -59,15 +73,16 @@
         <tbody class="table table-bordered"></tbody>
     </table>
 </div>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-<link href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css" rel="stylesheet" />
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.js"></script>
+<link href="//cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
 @section scripts{
     <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.21.0/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.21.0/moment.min.js"></script>
 
-    <script>
+<script>
         $(document).ready(function () {
             async: true
             dataTable = $("#Table").DataTable({
@@ -102,7 +117,7 @@
                     "emptyTable": "No data found"
                 },
                 "responsive": true,
-                "dom": 'lrtip'
+
             });
 
             $('.searchable').each(function () {
@@ -137,14 +152,9 @@
                     data: $(form).serialize(),
                     success: function (data) {
                          if (data.success) {
-                            $("#modalAdd").modal('hide');
-                            dataTable.ajax.reload();
-
-                            $.notify(data.message, {
-                                globalPosition: "top center",
-                                className: "success"
-                            })
-
+                             $("#modalAdd").modal('hide');
+                               $('#user_content').load('@Url.Action("PopUpUpdate","Home")');
+                             dataTable.ajax.reload();
                         }
                     }
                 });
@@ -160,15 +170,11 @@
                     success: function (data) {
                         if (data.success) {
                             dataTable.ajax.reload();
-
-                            $.notify(data.message, {
-                                globalPosition: "top center",
-                                className: "success"
-                            })
+                            $('#user_content').load('@Url.Action("PopUpDelete","Home")');
                         }
                     }
                 });
             }
         }
-    </script>
+</script>
 }

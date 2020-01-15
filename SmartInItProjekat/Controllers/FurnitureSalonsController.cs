@@ -3,6 +3,7 @@ using SmartInItProjekat.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -11,7 +12,7 @@ namespace SmartInItProjekat.Controllers
     [Authorize]
     public class FurnitureSalonsController : Controller
     {
-        IFurnitureSalonRepo _db; 
+        IFurnitureSalonRepo _db;
 
         public FurnitureSalonsController(IFurnitureSalonRepo db)
         {
@@ -20,7 +21,8 @@ namespace SmartInItProjekat.Controllers
         // GET: FurnitureSalons
         public ActionResult Index()
         {
-            if (User.IsInRole("Admin")) {
+            if (User.IsInRole("Admin"))
+            {
                 return View("IndexAdmin");
             }
             return View("IndexBuyer");
@@ -48,6 +50,7 @@ namespace SmartInItProjekat.Controllers
             {
                 return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
             }
+           
             if (_db.GetById(id) == null)
             {
                 return HttpNotFound();
@@ -60,14 +63,17 @@ namespace SmartInItProjekat.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Add(FurnitureSalon salon)
+        public async Task<ActionResult> Add(FurnitureSalon salon)
         {
+          
             if (ModelState.IsValid)
             {
-                _db.Add(salon);
-                return Json(new { success = true, message = "Added Successfully" }, JsonRequestBehavior.AllowGet);
+                await _db.Add(salon);
+                await _db.SaveAsync();
+                TempData["SuccessMsg"] = "Record Saved Successfully";
+                return Index();
             }
-            return Index();
+            return View(salon);
         }
         public ActionResult Update(int? id)
         {
@@ -75,12 +81,12 @@ namespace SmartInItProjekat.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Update(FurnitureSalon salon)
+        public async Task<ActionResult> Update(FurnitureSalon salon)
         {
             if (ModelState.IsValid)
             {
-                _db.Update(salon);
-                return Json(new { success = true, message = "Updated Successfully" }, JsonRequestBehavior.AllowGet);
+              await _db.Update(salon);
+              return Json(new { success = true, message = "Updated Successfully" }, JsonRequestBehavior.AllowGet);
             }
             return View(salon);
         }
@@ -93,3 +99,4 @@ namespace SmartInItProjekat.Controllers
 
     }
 }
+

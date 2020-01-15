@@ -25,7 +25,18 @@ namespace SmartInItProjekat.Controllers
             ViewBag.FurnitureSalonId = _db.IncludeFurnitureSalon();
             return View();
         }
-
+        public ActionResult PopUpUpdate()
+        {
+            return PartialView("_PopUpUpdate");
+        }
+        public ActionResult PopUpAdd()
+        {
+            return PartialView("_PopUpAdd");
+        }
+        public ActionResult PopUpDelete()
+        {
+            return PartialView("_PopUpDelete");
+        }
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";

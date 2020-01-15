@@ -9,7 +9,7 @@
 <h2>Edit</h2>
 
 
-@using (Html.BeginForm("Update", "Furnitures", FormMethod.Post, new { onsubmit = "return SumbitForm(this)" }))
+@using (Html.BeginForm("Update", "Furnitures", FormMethod.Post, new {  @class = "form-horizontal", role = "form", onsubmit = "return SumbitForm(this)" }))
 {
     @Html.AntiForgeryToken()
 

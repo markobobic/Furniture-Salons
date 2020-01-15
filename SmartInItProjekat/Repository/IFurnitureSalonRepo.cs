@@ -11,8 +11,10 @@ namespace SmartInItProjekat.Repository
     {
         IEnumerable<FurnitureSalon> GetAll();
         FurnitureSalon GetById(int? id);
-        void Add(FurnitureSalon furnitureSalon);
-        void Update(FurnitureSalon furnitureSalon);
+        Task<FurnitureSalon> Add(FurnitureSalon furnitureSalon);
+        Task Update(FurnitureSalon furnitureSalon);
         void Delete(int id);
+         Task SaveAsync();
+
     }
 }

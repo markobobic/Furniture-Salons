@@ -435,7 +435,6 @@
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-minty.css" />
-    <Content Include="Content\bootstrap-minty.min.css" />
     <Content Include="Content\bootstrap-notify.css" />
     <Content Include="Content\bootstrap-reboot.css" />
     <Content Include="Content\bootstrap-reboot.min.css" />
@@ -559,9 +558,12 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Shared\NavBarPartial.cshtml" />
     <Content Include="Views\Categories\Add.cshtml" />
-    <Content Include="Views\Home\Proba.cshtml" />
     <Content Include="Views\Shared\_FullPagePartial.cshtml" />
     <Content Include="Views\Users\Index.cshtml" />
+    <Content Include="Views\Users\Update.cshtml" />
+    <Content Include="Views\Home\_PopUpAdd.cshtml" />
+    <Content Include="Views\Home\_PopUpUpdate.cshtml" />
+    <Content Include="Views\Home\_PopUpDelete.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

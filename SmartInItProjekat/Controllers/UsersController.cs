@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNet.Identity.Owin;
+﻿using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity.Owin;
 using SmartInItProjekat.Models;
 using SmartInItProjekat.Repository;
 using SmartInItProjekat.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -63,6 +65,68 @@ namespace SmartInItProjekat.Controllers
             }
             ViewBag.Name = _db.IncludeRoles();
             return Index();
+        }
+        public ActionResult Details(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            ApplicationUser user = _db.GetById(id);
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+            IdentityRole role = _db.GetRole(id);
+            var details = new UserViewModel
+            {
+                Id = user.Id,
+                UserName = user.UserName,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Address = user.Adress,
+                Email = user.Email,
+                UserRole = role.Name
+            };
+            return View(details);
+        }
+        public ActionResult Update(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            ApplicationUser user = _db.GetById(id);
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+            IdentityRole role = _db.GetRole(id);
+            ViewBag.Name = _db.IncludeRoles();
+            ViewBag.Role = role.Name;
+            return View(user);
+        }
+
+       
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Update(ApplicationUser user)
+        {
+            if (ModelState.IsValid)
+            {
+                var currentUser = _db.Update(user);
+                await _db.GetManager().UpdateAsync(currentUser);
+
+                if (user.UserRoles == RoleName.Admin || user.UserRoles == RoleName.Buyer)
+                {
+                    string role = user.UserRoles == RoleName.Admin ? RoleName.Buyer : RoleName.Admin;
+                    await UserManager.RemoveFromRoleAsync(user.Id, role);
+                    await UserManager.AddToRoleAsync(user.Id, user.UserRoles);
+                }
+                return Json(new { success = true, message = "Updated Successfully" }, JsonRequestBehavior.AllowGet);
+            }
+            return View(user);
         }
         [AllowAnonymous]
         public JsonResult DoesUserNameExist(string userName)

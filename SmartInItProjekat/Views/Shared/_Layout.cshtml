@@ -33,16 +33,18 @@
             @Html.Partial("NavBarPartial")
             @Html.Partial("_LoginPartial")
         </div>
-
-    </nav><br />
-    <div class="container-fluid">
+    </nav>
+    <div class="container-fluid" style="padding: 0 !important;">
         @RenderSection("containerFluid", required: false)
     </div>
     <div class="container body-content">
         @RenderBody()
         <hr />
         <footer>
-            <div class="container-fluid">
+            <div class="container-fluid ">
+
+
+ 
                 @RenderSection("containerFluidTwo", required: false)
             </div>
             <p class="d-flex justify-content-center">&copy; @DateTime.Now.Year - Furniture Salons</p>

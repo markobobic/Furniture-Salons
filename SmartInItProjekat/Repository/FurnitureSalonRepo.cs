@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 
 namespace SmartInItProjekat.Repository
@@ -20,25 +21,25 @@ namespace SmartInItProjekat.Repository
         public FurnitureSalon GetById(int? id)
         {
             return db.FurnitureSalons.Include("Furnitures").SingleOrDefault(f => f.FurnitureSalonId == id);
-
         }
-
-        public void Add(FurnitureSalon furnitureSalon)
+        public async Task SaveAsync()
         {
-            db.FurnitureSalons.Add(furnitureSalon);
-            db.SaveChanges();
+            await db.SaveChangesAsync();
+        }
+        public async Task<FurnitureSalon> Add(FurnitureSalon furnitureSalon)
+        {
+            return db.FurnitureSalons.Add(furnitureSalon);
         }
 
-        public void Update(FurnitureSalon furnitureSalon)
+        public async Task Update(FurnitureSalon furnitureSalon)
         {
             db.Entry(furnitureSalon).State = System.Data.Entity.EntityState.Modified;
             try
             {
-                db.SaveChanges();
+               await db.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-
                 throw;
             }
         }

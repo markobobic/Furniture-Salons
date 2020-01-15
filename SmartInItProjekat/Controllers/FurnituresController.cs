@@ -52,7 +52,7 @@ namespace SmartInItProjekat.Controllers
             if (ModelState.IsValid)
             {
                 _db.Add(furniture, img);
-                return Json(new { success = true, message = "Added Successfully" }, JsonRequestBehavior.AllowGet);
+                return Json(new { success = true, message = "Added Successfully"}, JsonRequestBehavior.AllowGet);
             }
             ViewBag.CategoryId = _db.IncludeCategory();
             ViewBag.FurnitureSalonId = _db.IncludeFurnitureSalon();
