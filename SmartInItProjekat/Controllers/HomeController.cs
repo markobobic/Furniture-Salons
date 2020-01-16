@@ -37,6 +37,10 @@ namespace SmartInItProjekat.Controllers
         {
             return PartialView("_PopUpDelete");
         }
+        public ActionResult PopUpSubmission()
+        {
+            return PartialView("_PopUpSubmission");
+        }
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
@@ -50,9 +54,6 @@ namespace SmartInItProjekat.Controllers
 
             return View();
         }
-        public ActionResult Proba()
-        {
-            return View();
-        }
+      
     }
 }

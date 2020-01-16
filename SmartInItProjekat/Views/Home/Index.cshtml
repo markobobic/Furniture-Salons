@@ -46,7 +46,7 @@
     <tbody></tbody>
 </table>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.slim.min.js"></script>
-<link rel="stylesheet" href="~/Content/bootstrap-minty.min.css">
+<link rel="stylesheet" href="~/Content/bootstrap-minty.css">
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
 @section containerFluid{
     <div id="slideshow">
@@ -55,10 +55,10 @@
         <div class="elemnt2"><a class="links" href="/Account/Register"><span class="slides">Join us today and get plenty of discounts!</span></a></div>
         <div class="elemnt3"><a class="links" href="/Account/Register"><span class="slides">Join us today and get plenty of discounts!</span></a></div>
     </div>
-   
 
 }
 @section containerFluidTwo{
+
     <h2 class="">Our products</h2>
     <br />
     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
@@ -69,21 +69,21 @@
         </ol>
         <div class="carousel-inner" role="listbox">
             <!-- Slide One - Set the background image for this slide in the line below -->
-            <div  id="img1 "class="carousel-item active" style="background-image: url('/Content/Images/FurnitureStores2-1.jpg') !important">
+            <div id="img1 " class="carousel-item active" style="background-image: url('/Content/Images/FurnitureStores2-1.jpg') !important">
                 <div class="carousel-caption d-none d-md-block">
                     <h2 class="display-2">Bed</h2>
                     <p class="lead">Made with love.</p>
                 </div>
             </div>
             <!-- Slide Two - Set the background image for this slide in the line below -->
-            <div  widith="100%" class="carousel-item" style="background-image: url('/Content/Images/FurnitureStores2-2.jpg') !important">
+            <div widith="100%" class="carousel-item" style="background-image: url('/Content/Images/FurnitureStores2-2.jpg') !important">
                 <div class="carousel-caption d-none d-md-block">
                     <h2 class="display-2">Sofa</h2>
                     <p class="lead">Made with love.</p>
                 </div>
             </div>
             <!-- Slide Three - Set the background image for this slide in the line below -->
-            <div  class="carousel-item" style="background-image: url('/Content/Images/FurnitureStores2-4.jpg') !important">
+            <div class="carousel-item" style="background-image: url('/Content/Images/FurnitureStores2-4.jpg') !important">
                 <div class="carousel-caption d-none d-md-block">
                     <h2 class="display-2">Table</h2>
                     <p class="lead">Made with love.</p>
@@ -105,39 +105,43 @@
             <span class="sr-only">Next</span>
         </a>
     </div>
-   
-    }
-    @section scripts{
-        <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.21.0/moment.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
 
-        <script>
-            $('#Table').hide();
-            function LoadData() {
-                if ($('#list').val() == 0) {
-                    $('#Table').parents('div.dataTables_wrapper').first().hide();
-                    return;
-                }
-                $('#Table').show();
-                dataTable = $("#Table").DataTable({
-                    "ajax": {
-                        "url": "/Furnitures/GetDataFromSalon/",
-                        "data": { id: $('#list').val() },
-                        "type": "GET",
-                        "datatype": "json",
-                        "dataSrc": ""
-                    },
-                    "columns": [
-                        { "data": "Name" },
-                        { "data": "Category" },
-                        { "data": "Amount" },
-                        { "data": "Price" },
-                    ],
-                    "language": {
-                        "emptyTable": "No data found"
-                    },
-                    "searching": false,
-                    "destroy": true
-                });
-            }</script>
-    }
+
+}
+@section scripts{
+    <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.21.0/moment.min.js"></script>
+
+    <script>
+        $('#Table').hide();
+        function LoadData() {
+            if ($('#list').val() == 0) {
+                $('#Table').parents('div.dataTables_wrapper').first().hide();
+                return;
+            }
+            $('#Table').show();
+            dataTable = $("#Table").DataTable({
+                "ajax": {
+                    "url": "/Furnitures/GetDataFromSalon/",
+                    "data": { id: $('#list').val() },
+                    "type": "GET",
+                    "datatype": "json",
+                    "dataSrc": ""
+                },
+                "columns": [
+                    { "data": "Name" },
+                    { "data": "Category" },
+                    { "data": "Amount" },
+                    { "data": "Price" },
+                ],
+                "language": {
+                    "emptyTable": "No data found"
+                },
+                "searching": false,
+                "destroy": true
+            });
+        }</script>
+}

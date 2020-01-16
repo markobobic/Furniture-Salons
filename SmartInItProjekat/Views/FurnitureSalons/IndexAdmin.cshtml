@@ -4,22 +4,7 @@
 
     ViewBag.Title = "List Of Salons";
 }
-<div class="col-sm-12">
-    @Html.ValidationSummary(true)
-    @if (TempData["SuccessMsg"] != null)
-    {
-        <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-        <script>
-                $(document).ready(function(){
-              $('#user_content').load('@Url.Action("PopUpAdd","Home")');
-                    });
-        </script>
-    }
 
-
-
-
-</div>
 <h2>Furniture salons</h2>
 <div class="modal fade" id="modalAdd" role="dialog">
     <div class="modal-dialog">
@@ -73,7 +58,18 @@
         <tbody class="table table-bordered"></tbody>
     </table>
 </div>
-
+<div class="col-sm-12">
+    @Html.ValidationSummary(true)
+    @if (TempData["SuccessMsgSalon"] != null)
+    {
+        <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+        <script>
+                $(document).ready(function(){
+              $('#user_content').load('@Url.Action("PopUpAdd","Home")');
+                    });
+        </script>
+    }
+</div>
 <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 <script type="text/javascript" src="js/bootstrap.js"></script>
 <link href="//cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css" rel="stylesheet" />

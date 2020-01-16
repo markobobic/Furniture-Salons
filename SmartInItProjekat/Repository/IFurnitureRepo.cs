@@ -13,12 +13,13 @@ namespace SmartInItProjekat.Repository
     {
         IEnumerable<Furniture> GetAll();
         Furniture GetById(int? id);
-        void Add(Furniture furniture,HttpPostedFileBase img);
-        void Update(Furniture furniture, HttpPostedFileBase img = null);
+        Task<Furniture> Add(Furniture furniture);
+        bool Update(Furniture furniture);
         void Delete(int id);
         SelectList IncludeCategory();
         SelectList IncludeFurnitureSalon();
-       
-        
+        Task SaveAsync();
+
+
     }
 }

@@ -4,16 +4,12 @@
     Layout = null;
 }
 
-
-
-<h2>Add</h2>
-
 @using (Html.BeginForm("Add", "Furnitures", FormMethod.Post, new { onsubmit = "return SumbitForm(this)" }))
 {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>New Furniture Item</h4>
+        <h4>Add</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">

@@ -3,7 +3,7 @@
 
     ViewBag.Title = "Users";
 }
-
+  
 <h2>Users</h2>
 <div id="resultMsg"></div>
 <div class="modal fade" id="modalAdd" role="dialog">
@@ -107,7 +107,7 @@
                          if (data.success) {
                             $("#modalAdd").modal('hide');
                              dataTable.ajax.reload();
-                            $('#user_content').load('@Url.Action("PopUp","Home")');
+                            $('#user_content').load('@Url.Action("PopUpSubmission","Home")');
                         }
                     }
                 });

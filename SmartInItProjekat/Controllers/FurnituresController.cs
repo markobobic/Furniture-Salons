@@ -3,6 +3,7 @@ using SmartInItProjekat.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -22,17 +23,18 @@ namespace SmartInItProjekat.Controllers
             return View("IndexAdmin");
             return View("IndexBuyer");
         }
-        public ActionResult Details(int? id)
+        public ActionResult  Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
             }
-            if (_db.GetById(id) == null)
+            var furniture =  _db.GetById(id);
+            if (furniture == null)
             {
                 return HttpNotFound();
             }
-            return View(_db.GetById(id));
+            return View(furniture);
         }
         [Authorize(Roles ="Admin")]
         public ActionResult Add()
@@ -43,19 +45,17 @@ namespace SmartInItProjekat.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Add(Furniture furniture, HttpPostedFileBase img)
+        public async Task<ActionResult> Add(Furniture furniture)
         {
-            if (_db.GetAll().Any(f => f.Code == furniture.Code))
-            {
-                ModelState.AddModelError("","ALREADY EXIST");
-            }
             if (ModelState.IsValid)
             {
-                _db.Add(furniture, img);
-                return Json(new { success = true, message = "Added Successfully"}, JsonRequestBehavior.AllowGet);
+               await _db.Add(furniture);
+                await _db.SaveAsync();
+                TempData["SuccessMsgFurnitureAdd"] = "Record Saved Successfully";
+                return Index();
             }
-            ViewBag.CategoryId = _db.IncludeCategory();
-            ViewBag.FurnitureSalonId = _db.IncludeFurnitureSalon();
+            ViewBag.CategoryId =  _db.IncludeCategory();
+            ViewBag.FurnitureSalonId =  _db.IncludeFurnitureSalon();
            
             return Index();
             
@@ -66,7 +66,7 @@ namespace SmartInItProjekat.Controllers
             {
                 return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
             }
-            var furniture =_db.GetById(id);
+            var furniture =  _db.GetById(id);
             if (furniture == null)
             {
                 return HttpNotFound();
@@ -77,21 +77,25 @@ namespace SmartInItProjekat.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Update(Furniture furniture, HttpPostedFileBase img = null)
+        public ActionResult Update(Furniture furniture)
         {
             if (ModelState.IsValid)
             {
-                _db.Update(furniture, img);
-                return Json(new { success = true, message = "Updated Successfully" }, JsonRequestBehavior.AllowGet);
+                bool updated = _db.Update(furniture);
+                if (updated)
+                {
+                    TempData["SuccessMsgFurnitureUpdate"] = "Record Saved Successfully";
+                    return RedirectToAction("Index");
+                }
             }
-            ViewBag.CategoryId = _db.IncludeCategory();
-            ViewBag.FurnitureSalonId = _db.IncludeFurnitureSalon();
-            return RedirectToAction("Index");
+            ViewBag.CategoryId =  _db.IncludeCategory();
+            ViewBag.FurnitureSalonId =  _db.IncludeFurnitureSalon();
+            return View(furniture);
         }
         [HttpPost]
         public ActionResult Delete(int id)
         {
-            _db.Delete(id);
+             _db.Delete(id);
             return Json(new { success = true, message = "Deleted Successfully" }, JsonRequestBehavior.AllowGet);
 
         }
@@ -132,10 +136,7 @@ namespace SmartInItProjekat.Controllers
 
             return this.Json(data, JsonRequestBehavior.AllowGet);
         }
-        public ActionResult Error()
-        {
-            return View("Erorr");
-        }
+        
         
     }
 }

@@ -4,19 +4,20 @@
 }
 
 <h2>Furnitures</h2>
-<div class="row">
-    <div class="col-sm-12">
-        @if (Html.HasValidationMessageFor(model => model.Code))
-        {
-            <div class="alert alert-danger alert-dismissable" role="alert">
-                <a class="close" data-dismiss="alert" href="#">&times;</a>
-                <button type="button" class="close" data-animation="alert">
-                </button>
-                @Html.ValidationSummary(false)
-            </div>
-        }
-    </div>
-</div>
+@*<div class="row">
+        <div class="col-sm-12">
+            @if (Html.HasValidationMessageFor(model => model.Code))
+            {
+                <div class="alert alert-danger alert-dismissable" role="alert">
+                    <a class="close" data-dismiss="alert" href="#">&times;</a>
+                    <button type="button" class="close" data-animation="alert">
+                    </button>
+                    @Html.ValidationSummary(false)
+                </div>
+            }
+        </div>
+    </div>*@
+
 
 <div class="modal fade" id="modalAdd" role="dialog">
     <div class="modal-dialog">
@@ -70,11 +71,32 @@
     </table>
 </div>
 
-<script src="//code.jquery.com/jquery-1.9.1.js"></script>
-<script src="//code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+<div class="col-sm-12">
+    @Html.ValidationSummary(true)
+    @if (TempData["SuccessMsgFurnitureAdd"] != null)
+    {
+        <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+        <script>
+                $(document).ready(function(){
+              $('#user_content').load('@Url.Action("PopUpAdd", "Home")');
+                    });
+        </script>
+    }
+    else if (TempData["SuccessMsgFurnitureUpdate"] != null)
+    {
+        <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+        <script>
+                $(document).ready(function(){
+              $('#user_content').load('@Url.Action("PopUpUpdate", "Home")');
+                    });
+        </script>
+    }
+</div>
+
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.js"></script>
 <link href="//cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css" rel="stylesheet" />
 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
-
 @section scripts{
     <script src="//cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.21.0/moment.min.js"></script>
@@ -139,6 +161,7 @@
                 });
         }
 
+
           function SubmitForm(form) {
             $.validator.unobtrusive.parse(form);
             if ($(form).valid()) {
@@ -148,11 +171,9 @@
                     data: $(form).serialize(),
                     success: function (data) {
                         if (data.success) {
-                              $('#user_content').load('@Url.Action("PopUp","Home")');
-                             $("#modalAdd").modal('hide');
-                             
+                            $("#modalAdd").modal('hide');
+                            $('#user_content').load('@Url.Action("PopUpUpdate","Home")');
                              dataTable.ajax.reload();
-                           
                         }
                     }
                 });
@@ -168,11 +189,8 @@
                     success: function (data) {
                         if (data.success) {
                             dataTable.ajax.reload();
+                         $('#user_content').load('@Url.Action("PopUpDelete","Home")');
 
-                            $.notify(data.message, {
-                                globalPosition: "top center",
-                                className: "success"
-                            })
                         }
                     }
                 });
