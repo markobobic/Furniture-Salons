@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using SmartInItProjekat.Infrastructure;
 using SmartInItProjekat.Models;
 
 namespace SmartInItProjekat.Controllers
@@ -387,7 +388,16 @@ namespace SmartInItProjekat.Controllers
             ViewBag.ReturnUrl = returnUrl;
             return View(model);
         }
-
+        private ShoppingCart GetCart()
+        {
+            ShoppingCart cart = (ShoppingCart)Session["Cart"];
+            if (cart == null)
+            {
+                cart = new ShoppingCart();
+                Session["Cart"] = cart;
+            }
+            return cart;
+        }
         //
         // POST: /Account/LogOff
         [HttpPost]
@@ -395,6 +405,7 @@ namespace SmartInItProjekat.Controllers
         public ActionResult LogOut()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+            GetCart().Clear();
             return RedirectToAction("Index", "Home");
         }
 

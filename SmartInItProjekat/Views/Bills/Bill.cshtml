@@ -1,0 +1,64 @@
+﻿@model SmartInItProjekat.ViewModels.BillViewModel
+
+@{
+    ViewBag.Title = "Order";
+}
+<br />
+<h2 class="text-center main">Bill To @Html.DisplayFor(model => model.Buyer)</h2>
+
+@using (Html.BeginForm("CompletePurchase", "ShoppingCart"))
+{
+    @Html.AntiForgeryToken()
+
+
+    <table class="container-fluid">
+        <thead>
+            <tr>
+                <th><h1>Furniture</h1></th>
+                <th><h1>Amount</h1></th>
+                <th><h1>Salon</h1></th>
+                <th><h1>Price</h1></th>
+                <th><h1>Subtotal</h1></th>
+                <th><h1>Tax 20%</h1></th>
+                <th><h1>Total price</h1></th>
+                <th><h1>Purchase Time</h1></th>
+
+            </tr>
+        </thead>
+        @{var index = 0;}
+        @foreach (var item in Model.BillItems)
+        {
+            Html.Hidden("BillItems[" + index + "].Furniture", item.Furniture);
+            Html.Hidden("BillItems[" + index + "].Price", item.Price);
+            Html.Hidden("BillItems[" + index + "].Amount", item.Amount);
+            Html.Hidden("BillItems[" + index + "].FurnitureShop", item.FurnitureShop);
+            Html.Hidden("BillItems[" + index + "].FurnitureCategory", item.FurnitureCategory);
+            index++;
+            var price = item.Price / item.Amount;
+            var tax = item.Price * 0.2M;
+            var totalPrice = tax + item.Price;
+            <tr>
+                <td>@item.Furniture</td>
+                <td>@item.Amount</td>
+                <td>@item.FurnitureShop</td>
+                <td>@price.ToString("c")</td>
+                <td>@(item.Price.ToString("c"))</td>
+                <td>@tax.ToString("c")</td>
+                <td>@totalPrice.ToString("c")</td>
+                <td>@Model.TimeOfPurchase.ToString("dd.MM.yyyy. HH:mm:ss")</td>
+            </tr>
+
+        }
+
+
+    </table>
+    <br />
+    <br />
+    <div class="form-group">
+        <div class="col-md-offset-6 col-md-10">
+            <button type="submit" class="btn btn-success" style="margin-left:18%;width:30%"><i class="fa fa-shopping-bag"></i> Buy</button>
+        </div>
+    </div>
+}
+<link rel="stylesheet" href="@Href("~/Content/Report.css")" />
+

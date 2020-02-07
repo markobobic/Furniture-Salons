@@ -68,9 +68,9 @@ namespace SmartInItProjekat.Controllers
             var lst = _db.GetAll();
             var data = lst.Select(c => new
             {
-                c.CategoryId,
-                c.Name,
-                c.Description
+              c.CategoryId,
+              Name = c.Name,
+              Description=c.Description
             });
             return this.Json(data, JsonRequestBehavior.AllowGet);
 
@@ -79,6 +79,10 @@ namespace SmartInItProjekat.Controllers
         {
             _db.Delete(id);
             return Json(new { success = true, message = "Deleted Successfully" }, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult DoesNameExist(string name)
+        {
+            return Json(!_db.DoesNameExist(name), JsonRequestBehavior.AllowGet);
         }
     }
 }

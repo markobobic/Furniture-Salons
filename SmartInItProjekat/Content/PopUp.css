@@ -62,10 +62,15 @@
 
 button.close {
     padding: 15px;
-    margin-left: auto;
+    top:0;
+    right:0;
     background: transparent;
     border: 0;
     -webkit-appearance: none;
     line-height:0;
+}
+.modal-backdrop {
+    /* bug fix - no overlay */
+    background-color: wheat;
 }
 

@@ -1,0 +1,46 @@
+﻿footer {
+    height: 70px;
+    width: 100%;
+    padding: 10px;
+    padding-left: 20px;
+    background: #F2F2F2;
+    border-top: 1px solid #ccc;
+    clear: both;
+    margin-top: 50px;
+}
+
+body {
+    font-family: Rubik,Arial,sans-serif;
+    font-weight: 400;
+    font-size: 1rem;
+    overflow-x: hidden;
+    color: #607289;
+}
+
+h5 {
+    font-size: 1rem;
+    line-height: 1.375;
+    font-family: Rubik,Arial,sans-serif;
+    font-weight: 500;
+    color: #030929;
+}
+
+html h2 {
+    text-align: center !important;
+}
+
+a {
+    color: #818494;
+    font-weight: 500;
+    text-decoration: none;
+    background-color: transparent;
+}
+
+    a:hover {
+        color: #007bff;
+        text-decoration: none;
+    }
+
+footer {
+    background: #ebf4fa;
+}

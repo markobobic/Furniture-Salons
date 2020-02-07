@@ -19,6 +19,7 @@ namespace SmartInItProjekat.Repository
         public void Delete(int id)
         {
             db.Categories.Remove(db.Categories.Find(id));
+            db.SaveChanges();
         }
 
         public IEnumerable<Category> GetAll()
@@ -61,6 +62,11 @@ namespace SmartInItProjekat.Repository
         {
             Dispose(true);
             GC.SuppressFinalize(this);
+        }
+
+        public bool DoesNameExist(string name)
+        {
+          return db.Categories.Any(x => x.Name == name);
         }
     }
 }

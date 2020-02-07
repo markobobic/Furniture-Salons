@@ -1,5 +1,7 @@
-﻿using SmartInItProjekat.Models;
+﻿using SmartInItProjekat.Infrastructure;
+using SmartInItProjekat.Models;
 using SmartInItProjekat.Repository;
+using SmartInItProjekat.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,6 +35,21 @@ namespace SmartInItProjekat.Controllers
         {
             return PartialView("_PopUpAdd");
         }
+        private ShoppingCart GetCart()
+        {
+            ShoppingCart cart = (ShoppingCart)Session["Cart"];
+            if (cart == null)
+            {
+                cart = new ShoppingCart();
+                Session["Cart"] = cart;
+            }
+            return cart;
+        }
+      public ActionResult PopUpWarning()
+        {
+            return PartialView("_PopUpWarning");
+        }
+
         public ActionResult PopUpDelete()
         {
             return PartialView("_PopUpDelete");
@@ -41,13 +58,20 @@ namespace SmartInItProjekat.Controllers
         {
             return PartialView("_PopUpSubmission");
         }
+        public ActionResult PopUpWarningDate()
+        {
+            return PartialView("_PopUpWarningDate");
+        }
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
 
             return View();
         }
-
+        public ActionResult PopUpWarnigStartEndDate()
+        {
+            return PartialView("_PopUpWarnigStartEndDate");
+        }
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";

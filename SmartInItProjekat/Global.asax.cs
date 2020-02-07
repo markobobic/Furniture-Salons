@@ -1,4 +1,5 @@
 using SmartInItProjekat.App_Start;
+using SmartInItProjekat.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,14 @@ namespace SmartInItProjekat
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             ContainerConfig.RegisterContainer();
+            ModelBinders.Binders.Add(typeof(ShoppingCart), new ShoppingCartModelBinder());
 
+        }
+        protected void Application_BeginRequest()
+        {
+            Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            Response.Cache.SetExpires(DateTime.UtcNow.AddHours(-1));
+            Response.Cache.SetNoStore();
         }
     }
 }

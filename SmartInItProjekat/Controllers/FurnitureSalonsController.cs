@@ -13,7 +13,6 @@ namespace SmartInItProjekat.Controllers
     public class FurnitureSalonsController : Controller
     {
         IFurnitureSalonRepo _db;
-
         public FurnitureSalonsController(IFurnitureSalonRepo db)
         {
             _db = db;
@@ -57,6 +56,7 @@ namespace SmartInItProjekat.Controllers
             }
             return View(_db.GetById(id));
         }
+       
         public ActionResult Add()
         {
             return View();
@@ -70,8 +70,7 @@ namespace SmartInItProjekat.Controllers
             {
                 await _db.Add(salon);
                 await _db.SaveAsync();
-                TempData["SuccessMsg"] = "Record Saved Successfully";
-                return Index();
+                return Json(new { success = true, message = "Added Successfully" });
             }
             return View(salon);
         }
@@ -95,6 +94,19 @@ namespace SmartInItProjekat.Controllers
         {
             _db.Delete(id);
             return Json(new { success = true, message = "Deleted Successfully" }, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult DoesPIBExist(string PIB)
+        {
+            return Json(!_db.DoesPIBExist(PIB), JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult DoesAccountNumberExist(string accountNumber)
+        {
+            return Json(!_db.DoesAccountNumberExist(accountNumber), JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult DoesEmailExist(string Email)
+        {
+            return Json(!_db.DoesEmailExist(Email), JsonRequestBehavior.AllowGet);
         }
 
     }

@@ -1,0 +1,102 @@
+﻿@model SmartInItProjekat.Models.Bill
+
+@{
+    ViewBag.Title = "Report";
+}
+
+
+<br />
+<h2 class="text-center main">Generate report</h2>
+<hr />
+@using (Html.BeginForm("GenerateReport", "Bills" ))
+{
+    
+    @Html.AntiForgeryToken()
+<div class="text-center">
+    <div class="form-horizontal">
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.Label("Name", "Category", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10" style="margin: 0 auto;" align="center">
+                @Html.DropDownList("Category", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessage("Category", "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("StartDate", "Start Date",
+                htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10" style="margin: 0 auto;" align="center">
+                @Html.Editor("StartDate", new { htmlAttributes = new { @class = "form-control date-picker", value = "", type = "date", id = "StartDate" } })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("EndDate", "End Date", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10" style="margin: 0 auto;" align="center">
+                @Html.Editor("EndDate", new { htmlAttributes = new { @class = "form-control date-picker", value = "", type = "date", @id = "EndDate" } })
+            </div>
+        </div>
+        <div id="user_content"></div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-12">
+                <input type="submit" id="submit" value="Submit" onclick="checkDate()" class="btn btn-success" />
+            </div>
+        </div>
+    </div>
+</div>
+
+}
+
+
+<script>
+    var today = new Date().toISOString().split('T')[0];
+    document.getElementById("StartDate").setAttribute('max', today);
+    document.getElementById("EndDate").setAttribute('max', today);
+
+   
+
+    function checkDate() {
+        var StartDate = document.getElementById('StartDate').value;
+        var EndDate = document.getElementById('EndDate').value;
+
+        if (!Date.parse(StartDate) || !Date.parse(EndDate) || !Date.parse(StartDate) && !Date.parse(EndDate)) {
+
+            $("form").submit(function (e) {
+                e.preventDefault();
+                 $(this).unbind('submit').submit()
+            });
+            $('#user_content').load('@Url.Action("PopUpWarningDate","Home")');
+            $(".modal-backdrop").remove();
+           
+        } 
+          if (StartDate > EndDate) {
+
+            $("form").submit(function (e) {
+                e.preventDefault();
+                 $(this).unbind('submit').submit()
+            });
+            $('#user_content').load('@Url.Action("PopUpWarnigStartEndDate","Home")');
+            $(".modal-backdrop").remove();
+           
+             } 
+        
+        
+
+        @*if (!Date.parse(EndDate)) {
+            
+            $("form").submit(function(e){
+            e.preventDefault();
+            });
+            $('#user_content').load('@Url.Action("PopUpWarningDate","Home")');
+             $(".modal-backdrop").remove();
+        }*@
+
+    }
+
+</script>
+
+
+

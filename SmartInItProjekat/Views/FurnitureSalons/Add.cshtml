@@ -5,19 +5,17 @@
 }
 
 
-
-@using (Html.BeginForm("Add", "FurnitureSalons", FormMethod.Post, new { onsubmit = "return SumbitForm(this)" }))
+@using (Html.BeginForm("Add", "FurnitureSalons", FormMethod.Post, new { onsubmit = "return SubmitForm(this)" }))
 {
     @Html.AntiForgeryToken()
-
     <div class="form-horizontal">
-        <h4>Add new Furniture Salon</h4>
-        <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
             @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                <input onkeypress="return ((event.charCode >= 65 &amp;&amp; event.charCode <= 90) || (event.charCode >= 97 &amp;&amp; event.charCode <= 122) || (event.charCode == 32))" class="form-control text-box single-line"
+                       data-val="true" data-val-length="Name must be between 2 and 50 characters!" data-val-length-max="50" data-val-length-min="2" data-val-regex="Spaces can only exist beetween words"
+                       data-val-regex-pattern="^\w+( +\w+)*$|" data-val-required="You must provide name" id="Name" name="Name" type="text" value="">
                 @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -25,7 +23,9 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Owner, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Owner, new { htmlAttributes = new { @class = "form-control" } })
+                <input onkeypress="return ((event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122) || (event.charCode == 32))"
+                       class="form-control text-box single-line valid" data-val="true" data-val-length="Name must be between 2 and 50 characters!"
+                       data-val-length-max="50" data-val-length-min="2" data-val-required="You must provide owner name" id="Owner" name="Owner" type="text" value="" aria-describedby="Owner-error" aria-invalid="false">
                 @Html.ValidationMessageFor(model => model.Owner, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -89,10 +89,12 @@
 }
 
 
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")"
+        type="text/javascript">
+</script>
 
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")"
+        type="text/javascript">
+</script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>
-@Scripts.Render("~/bundles/jqueryval")
 

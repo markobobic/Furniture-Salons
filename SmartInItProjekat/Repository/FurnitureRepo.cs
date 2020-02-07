@@ -19,11 +19,11 @@ namespace SmartInItProjekat.Repository
         }
         public SelectList IncludeCategory()
         {
-            return  new SelectList(db.Categories, "CategoryId", "Name");
+            return  new SelectList(db.Categories.OrderBy(x=>x.Name), "CategoryId", "Name");
         }
         public  SelectList IncludeFurnitureSalon()
         {
-           return  new SelectList(db.FurnitureSalons, "FurnitureSalonId", "Name");
+           return  new SelectList(db.FurnitureSalons.OrderBy(x=>x.Name), "FurnitureSalonId", "Name");
         }
        
         public  Furniture GetById(int? id)
@@ -31,22 +31,19 @@ namespace SmartInItProjekat.Repository
             return  db.Furnitures.Include("FurnitureSalon").Include("Category").SingleOrDefault(f => f.FurnitureId == id);
         }
 
-        public async Task SaveAsync()
+      
+        public  void Add(Furniture furniture)
         {
-            await db.SaveChangesAsync();
-        }
-        public async Task<Furniture> Add(Furniture furniture)
-        {
-            return  db.Furnitures.Add(furniture);
+            db.Furnitures.Add(furniture);
+                db.SaveChanges();
         }
 
-        public bool  Update(Furniture furniture)
+        public  void Update(Furniture furniture)
         {
             db.Entry(furniture).State = System.Data.Entity.EntityState.Modified;
             try
             {
-                db.SaveChanges();
-                return true;
+                 db.SaveChanges();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -77,5 +74,10 @@ namespace SmartInItProjekat.Repository
             db.SaveChanges();
             
         }
+        public bool DoesCodeExist(string code)
+        {
+            return db.Furnitures.Any(x => x.Code == code);
+        }
+       
     }
 }

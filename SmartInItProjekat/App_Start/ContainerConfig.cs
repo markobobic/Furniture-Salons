@@ -22,6 +22,8 @@ namespace SmartInItProjekat.App_Start
             builder.RegisterType<ApplicationDbContext>().InstancePerRequest();
             builder.RegisterType<UsersRepo>().As<IUsers>().InstancePerRequest();
             builder.RegisterType<ApplicationDbContext>().InstancePerRequest();
+            builder.RegisterType<BillRepo>().As<IBillRepo>().InstancePerRequest();
+            builder.RegisterType<ApplicationDbContext>().InstancePerRequest();
             var container = builder.Build();
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
 

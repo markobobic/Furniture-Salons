@@ -24,6 +24,17 @@ namespace SmartInItProjekat.Models
         public string Buyer { get; set; }
 
         public virtual ICollection<BillItem> BillItems { get; set; }
-
+        public decimal TotalTax()
+        {
+            return Subtotal() * 0.2M;
+        }
+        public Bill()
+        {
+            this.BillItems = new HashSet<BillItem>();
+        }
+        public decimal Subtotal()
+        {
+            return BillItems.Sum(m => m.Price);
+        }
     }
 }

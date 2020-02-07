@@ -3,27 +3,14 @@
     ViewBag.Title = "List Of Furniture ";
 }
 
-<h2>Furnitures</h2>
-@*<div class="row">
-        <div class="col-sm-12">
-            @if (Html.HasValidationMessageFor(model => model.Code))
-            {
-                <div class="alert alert-danger alert-dismissable" role="alert">
-                    <a class="close" data-dismiss="alert" href="#">&times;</a>
-                    <button type="button" class="close" data-animation="alert">
-                    </button>
-                    @Html.ValidationSummary(false)
-                </div>
-            }
-        </div>
-    </div>*@
-
-
+<br />
+<h2 class="text-center main">Furniture</h2>
+<br />
 <div class="modal fade" id="modalAdd" role="dialog">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="mTitle">Furniture</h5>
+                <h4 class="modal-title" id="mTitle">Furniture</h4>
                 <button id="close-modal" type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -35,73 +22,60 @@
         </div>
     </div>
 </div>
-
-<a id="button-add" class="btn btn-success" style="margin-bottom:10px;color:white" data-toggle="modal" data-target="#modalAdd"
-   onclick="PopupForm('@Url.Action("Add","Furnitures")')"><i class="fa fa-plus"></i> Add New Furniture</a>
+<a class="btn btn-success" style="margin-bottom:10px;color:white" data-toggle="modal"
+   data-target="#modalAdd"
+   onclick="PopupForm('@Url.Action("Add","Furnitures")')"><i class="fa fa-plus"></i> Add New </a>
 <div id="user_content"></div>
-<div style="width:1250px">
-    <table id="Table" class="table table-striped">
-        <thead>
-            <tr>
-                <th>Code</th>
-                <th>Name</th>
-                <th>Origin</th>
-                <th>Year Made</th>
-                <th>Category</th>
-                <th>Shop</th>
-                <th>Quantity</th>
-                <th>Price</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tfoot style="display:table-header-group">
-            <tr>
-                <th></th>
-                <th class="searchable">Name</th>
-                <th class="searchable">Origin</th>
-                <th class="searchable">Year Made</th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th class="searchable">Price</th>
-                <th></th>
-            </tr>
-        </tfoot>
-        <tbody class="table table-bordered"></tbody>
-    </table>
-</div>
-
-<div class="col-sm-12">
-    @Html.ValidationSummary(true)
-    @if (TempData["SuccessMsgFurnitureAdd"] != null)
-    {
-        <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-        <script>
-                $(document).ready(function(){
-              $('#user_content').load('@Url.Action("PopUpAdd", "Home")');
-                    });
-        </script>
+<div class="row">
+    <div class="table-responsive">
+        <table id="Table" width="100%">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Code</th>
+                    <th>Name</th>
+                    <th>Origin</th>
+                    <th>Year Made</th>
+                    <th>Category</th>
+                    <th>Shop</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tfoot style="display:table-header-group">
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th class="searchable">Name</th>
+                    <th class="searchable">Origin</th>
+                    <th class="searchable">Year Made</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th class="searchable">Price</th>
+                    <th></th>
+                </tr>
+            </tfoot>
+            <tbody class="table table-bordered"></tbody>
+        </table>
+    </div>
+    </div>
+<style>
+    .btn-block {
+        display: block;
+        width: 70%;
     }
-    else if (TempData["SuccessMsgFurnitureUpdate"] != null)
-    {
-        <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+</style>
+    <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    @section Scripts{
+        <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.21.0/moment.min.js"></script>
+        <script src="https://rawgit.com/makeusabrew/bootbox/f3a04a57877cab071738de558581fbc91812dce9/bootbox.js"></script>
         <script>
-                $(document).ready(function(){
-              $('#user_content').load('@Url.Action("PopUpUpdate", "Home")');
-                    });
-        </script>
-    }
-</div>
-
-<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-<script type="text/javascript" src="js/bootstrap.js"></script>
-<link href="//cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css" rel="stylesheet" />
-<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
-@section scripts{
-    <script src="//cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.21.0/moment.min.js"></script>
-    <script>
         $(document).ready(function () {
+            aync:true
             dataTable = $("#Table").DataTable({
                 "ajax": {
                     "url": "/Furnitures/GetData/",
@@ -110,6 +84,7 @@
                     "dataSrc": ""
                 },
                 "columns": [
+                    { 'data': 'id', defaultContent: '' },
                     { "data": "Code" },
                     { "data": "Name"},
                     { "data": "CountryOfOrigin" },
@@ -124,18 +99,33 @@
                                     "data-toggle='modal' data-target='#modalAdd'onclick=PopupForm('@Url.Action("Update","Furnitures")/" +
                                 data + "')><i class='fa fa-pencil'></i>Update</a><a class='btn btn-outline-success btn-block btn-sm' data-toggle='modal' data-target='#modalAdd'" +
                                     "onclick=PopupForm('@Url.Action("Details","Furnitures")/" +
-                                data + "')><i class='fa fa-list'></i> Details</a ><a class='btn btn-outline-danger btn-block btn-sm'" +
+                                data + "')><i class='fa fa-list'></i> Details</a ><a id='delete' class='btn btn-outline-danger btn-block btn-sm'" +
                                     "onclick=Delete(" + data + ")><i class='fa fa-trash'></i> Delete</a >";
                         }
 
                     }
                 ],
+                "columnDefs": [
+                    {
+                        "searchable": false,
+                        "orderable": false,
+                        "targets": 0
+
+                    },
+                ],
                 "language": {
                     "emptyTable": "No data found"
+
                 },
                 "responsive": true,
 
             });
+
+             dataTable.on( 'order.dt search.dt', function () {
+            dataTable.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+            cell.innerHTML = i+1;
+                } );
+            } ).draw();
 
             $('.searchable').each(function () {
                 var title = $('#Table thead th').eq($(this).index()).text();
@@ -161,8 +151,7 @@
                 });
         }
 
-
-          function SubmitForm(form) {
+      function SubmitForm(form) {
             $.validator.unobtrusive.parse(form);
             if ($(form).valid()) {
                 $.ajax({
@@ -170,10 +159,10 @@
                     url: form.action,
                     data: $(form).serialize(),
                     success: function (data) {
-                        if (data.success) {
+                         if (data.success) {
                             $("#modalAdd").modal('hide');
-                            $('#user_content').load('@Url.Action("PopUpUpdate","Home")');
-                             dataTable.ajax.reload();
+                             $('#user_content').load('@Url.Action("PopUpSubmission","Home")');
+                              dataTable.ajax.reload();
                         }
                     }
                 });
@@ -181,20 +170,38 @@
             return false;
         }
 
-        function Delete (id){
-            if (confirm("Are you sure you want to delete this Shop?")) {
+
+      function Delete(id) {
+    bootbox.confirm({
+        message: "Are you sure you want to delete?",
+        buttons: {
+            cancel: {
+                label: 'No',
+                className: 'btn-danger'
+            },
+            confirm: {
+                label: 'Yes',
+                className: 'btn-success'
+            }
+        },
+        callback: function(result) {
+            if (result) {
                 $.ajax({
                     type: "POST",
                     url: '@Url.Action("Delete", "Furnitures")/' + id,
-                    success: function (data) {
+                    success: function(data) {
                         if (data.success) {
                             dataTable.ajax.reload();
-                         $('#user_content').load('@Url.Action("PopUpDelete","Home")');
+                            $('#user_content').load('@Url.Action("PopUpDelete","Home")');
 
                         }
                     }
                 });
             }
         }
-    </script>
+    });
+
 }
+
+        </script>
+    }

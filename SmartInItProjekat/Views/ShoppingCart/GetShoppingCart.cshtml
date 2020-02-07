@@ -1,0 +1,107 @@
+﻿@using SmartInItProjekat.Models
+@model SmartInItProjekat.ViewModels.ShoppingCartViewModel
+@{
+    Layout = null;
+}
+@{ int total = 0;}
+@foreach (var k in Model.ShoppingCart.ViewItems)
+{
+    total += k.Furniture.Amount;
+}
+@if (total == 0)
+{
+    <script>
+        $('#user_content').load('@Url.Action("PopUpWarning","Home")');
+    </script>
+}
+else
+{
+    <script>
+        $('#cartModal').modal('show');
+    </script>
+}
+<dvi id="user_content"></dvi>
+
+<div class="modal fade" id="cartModal"  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="dialog">
+        <div class="modal-content">
+            <div class="modal-header ">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Piece of furniture
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-image">
+                    <thead>
+                        <tr>
+                            <th scope="col"></th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">Subtotal</th>
+                            <th scope="col">Subtotal with VAT</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.ShoppingCart.ViewItems)
+                          
+                         {
+
+                            <tr>
+                                <td scope="col"></td>
+                                <td scope="col">@item.Furniture.Name</td>
+                                <td scope="col">@item.Furniture.Price.ToString("c")</td>
+                                <td scope="col">
+                                    <input type="number" id="qua" form="form0" min="1" max=@(item.Furniture.Amount) name="quantity" size="5" required value="1" oninput="validity.valid||(value='');" />
+                                </td>
+                                <td scope="col">
+                                    @((item.Quantity * item.Furniture.Price).ToString("c"))
+                                </td>
+        
+
+                                <td>
+        
+
+                                    <span class="price text-success"> @(((item.Quantity * (item.Furniture.Price + item.Furniture.Price * Tax.RegularTax)).ToString("c")))</span>
+                                    </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer border-top-0 d-flex justify-content-between">
+                @using (Ajax.BeginForm("Purchase", "ShoppingCart",
+                            new AjaxOptions
+                            {
+                                InsertionMode = InsertionMode.Replace,
+                                HttpMethod = "POST",
+
+                            }))
+                {
+                    <input type="hidden" name="id" class="id" ) />
+                    <input type="submit" id="save" name="save" onclick="" value="Add and continue shopping" class="btn btn-primary" />
+                }
+                <div class="right-btn">
+                    <input type="submit" id="order" style="float:right" form="form0" value="Order" name="submit" class="btn btn-primary" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+        $(document).ready(function () {
+
+            if (@Model.ShoppingCart.Items.Count() ==0) {
+                $("#error").html("Your shopping cart is empty!");
+            }
+        });
+         
+
+</script>
+
+
+

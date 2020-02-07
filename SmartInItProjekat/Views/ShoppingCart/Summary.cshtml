@@ -1,0 +1,112 @@
+﻿@model SmartInItProjekat.Infrastructure.ShoppingCart
+<link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+
+@{ int total = 0;}
+@{ bool isExceded = false;}
+@foreach (var k in Model.Items)
+{
+    int qua = k.Quantity;
+    total = k.Furniture.Amount;
+
+    if (total < qua)
+    {
+        isExceded = true;
+        qua = 0;
+
+    }
+
+}
+@if (isExceded == true)
+{
+    <div class="alert">
+        <strong>Checkout your cart</strong>
+    </div>
+}
+@{string compute = @Model.ComputeTotalValueWithTax().ToString("c");}
+<ul class="nav navbar-nav navbar-right">
+    <li class="nav-item" style="color:white;margin:10px 10px">
+
+
+    </li>
+    <li class="nav-item" style="margin:5px 20px 5px 10px" id="picture">
+        <a href=@Url.Action("Index", "ShoppingCart")
+           class="btn btn-outline-light navbar-btn">
+            <img width="50px" height="50px"  src="https://img.icons8.com/plasticine/2x/shopping-cart.png" />
+            <span class='badge badge-warning' id='lblCartCount'>@Model.Items.Sum(x => x.Quantity) </span>
+        </a>
+    </li>
+</ul>
+<div class="modal fade" id="errorModal" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="mTitle">Shopping Cart</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p id="error"></p>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .badge {
+        padding-left: 9px;
+        padding-right: 9px;
+        -webkit-border-radius: 9px;
+        -moz-border-radius: 9px;
+        border-radius: 9px;
+    }
+
+    .label-warning[href],
+    .badge-warning[href] {
+        background-color: #c67605;
+    }
+
+    #lblCartCount {
+        font-size: 14px;
+        background: #ff0000;
+        color: #fff;
+        padding: 0 5px;
+        vertical-align: top;
+        margin-left: -10px;
+    }
+
+
+    .alert {
+        padding: 20px;
+        background-color: #f44336;
+        color: white;
+        opacity: 1;
+        transition: opacity 0.6s;
+        margin-bottom: 15px;
+    }
+
+        .alert.success {
+            background-color: #4CAF50;
+        }
+
+        .alert.warning {
+            background-color: #ff9800;
+        }
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+<script>
+    var elementClicked = false;
+    $('#picture').click(function (e) {
+        elementClicked = true;
+    if (elementClicked) {
+             if (@Model.Items.Count()== 0) {
+                $("#error").html("Your shopping cart is empty!");
+                $('#errorModal').modal('show');
+                e.preventDefault();
+            }
+        }
+    });
+   
+</script>

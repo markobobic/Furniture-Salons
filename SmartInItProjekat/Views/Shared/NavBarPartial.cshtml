@@ -1,5 +1,5 @@
 ﻿@using Microsoft.AspNet.Identity
-@Styles.Render("~/Content/Navbar.css")
+
 @if (User.Identity.IsAuthenticated)
 {
     <nav class="navbar navbar-expand-lg navbar-dark bg-blue navbar navbar-default navbar-fixed-top">
@@ -45,10 +45,10 @@
 
 }
 
-@*@if (User.IsInRole("Buyer"))
-    {
-        @Html.Action("Summary", "ShoppingCart")
-    }*@
+@if (User.IsInRole("Buyer"))
+{
+    @Html.Action("Summary", "ShoppingCart")
+}
 
 
 

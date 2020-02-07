@@ -1,0 +1,193 @@
+﻿@{
+
+
+    ViewBag.Title = "List of Buyers";
+}
+<br />
+<h2 class="text-center main">Buyers </h2>
+<br />
+<div class="modal fade" id="modalAdd" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="mTitle">Users</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+<div id="user_content"></div>
+<div class="row">
+    <div class="table-responsive">
+        <table id="Table" width="100%">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>User Name</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Address</th>
+                    <th>Email</th>
+                    <th>User Role</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tfoot style="display:table-header-group">
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th class="searchable">First Name</th>
+                    <th class="searchable">Last Name</th>
+                    <th class="searchable">Address</th>
+                    <th class="searchable">Email</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </tfoot>
+            <tbody class="table table-bordered"></tbody>
+        </table>
+    </div>
+</div>
+<style>
+.btn-block {
+    display: block;
+    width: 50%;
+}
+</style>
+
+<link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+@section scripts{
+    <script src="//cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.21.0/moment.min.js"></script>
+    <script src="https://rawgit.com/makeusabrew/bootbox/f3a04a57877cab071738de558581fbc91812dce9/bootbox.js"></script>
+
+    <script>
+         $(document).ready(function () {
+            dataTable = $("#Table").DataTable({
+                "ajax": {
+                    "url": "/Users/GetAllBuyers/",
+                    "type": "GET",
+                    "datatype": "json",
+                    "dataSrc": ""
+                },
+                "columns": [
+                     { 'data': 'id', defaultContent: '' },
+                    { "data": "UserName", "searchable": false },
+                    { "data": "FirstName", "searchable": true },
+                    { "data": "LastName", "searchable": true },
+                    { "data": "Address", "searchable": true },
+                    { "data": "Email", "searchable": true },
+                    { "data": "UserRole"},
+                    {
+                        "data": "Id", "width": "22%", sortable:false, render: function(data) {
+                            return "<a class='btn btn-outline-info btn-block btn-sm'" +
+                                    "data-toggle='modal' data-target='#modalAdd'onclick=PopupForm('@Url.Action("Update","Users")/" +
+                                data + "')><i class='fa fa-pencil'></i>Update</a><a class='btn btn-outline-success btn-block btn-sm' data-toggle='modal' data-target='#modalAdd'" +
+                                    "onclick=PopupForm('@Url.Action("Details","Users")/" +
+                                data + "')><i class='fa fa-list'></i> Details</a ><a class='btn btn-outline-danger btn-block btn-sm'" +
+                                    " onclick=Delete('" + data + "')><i class='fa fa-trash'></i> Delete</a>";
+                        }
+
+                    }
+                ],
+                "columnDefs": [
+                    {
+                        "searchable": false,
+                        "orderable": false,
+                        "targets": 0
+
+                    },
+                ],
+                "language": {
+                    "emptyTable": "No data found"
+                },
+                "responsive": "true"
+            });
+
+             dataTable.on( 'order.dt search.dt', function () {
+            dataTable.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+            cell.innerHTML = i+1;
+                } );
+            } ).draw();
+
+        $('.searchable').each(function () {
+                var title = $('#Table thead th').eq($(this).index()).text();
+                $(this).html('<input class="form-control " type="text" placeholder="Search ' + title + ' " ' + ' style="width: 130px;"/>')
+        });
+             dataTable.columns().every(function () {
+                var datatableColumn = this;
+
+                $(this.footer()).find('input').on('keyup change', function () {
+                    datatableColumn.search(this.value).draw();
+                });
+            })
+         });
+         function PopupForm(url) {
+            var formDiv = $('.modal-body');
+            $.get(url)
+                .done(function (response) {
+                    var modal = $(this);
+                    formDiv.html(response);
+                });
+        }
+
+       function SubmitForm(form) {
+            $.validator.unobtrusive.parse(form);
+            if ($(form).valid()) {
+                $.ajax({
+                    type: "POST",
+                    url: form.action,
+                    data: $(form).serialize(),
+                    success: function (data) {
+                         if (data.success) {
+                            $("#modalAdd").modal('hide');
+                             dataTable.ajax.reload();
+                            $('#user_content').load('@Url.Action("PopUpSubmission","Home")');
+                        }
+                    }
+                });
+            }
+            return false;
+        }
+
+       function Delete(id) {
+    bootbox.confirm({
+        message: "Are you sure you want to delete?",
+        buttons: {
+            cancel: {
+                label: 'No',
+                className: 'btn-danger'
+            },
+            confirm: {
+                label: 'Yes',
+                className: 'btn-success'
+            }
+        },
+        callback: function(result) {
+            if (result) {
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("Delete", "Users")/' + id,
+                    success: function(data) {
+                        if (data.success) {
+                            dataTable.ajax.reload();
+                            $('#user_content').load('@Url.Action("PopUpDelete","Home")');
+
+                        }
+                    }
+                });
+            }
+        }
+    });
+
+}
+    </script>
+}
+

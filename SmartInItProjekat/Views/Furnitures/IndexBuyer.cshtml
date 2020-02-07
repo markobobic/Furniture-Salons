@@ -2,14 +2,16 @@
 @{
     ViewBag.Title = "List Of Furniture Pieces";
 }
-
-<h2>Furniture</h2>
+ 
+<br />
+<h2 class="text-center main">Furniture</h2>
+<br />
 
 <div class="modal fade" id="modalAdd" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="mTitle">Furniture</h5>
+                <h5 class="modal-title" id="mTitle">Add to cart</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -21,47 +23,47 @@
         </div>
     </div>
 </div>
+<div id="user_content"></div>
+<div class="row">
+    <div class="table-responsive" >
+        <table id="Table" width="100%">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Name</th>
+                    <th>Origin</th>
+                    <th>Year Made</th>
+                    <th>Category</th>
+                    <th>Shop</th>
+                    <th id="name">In Store</th>
+                    <th>Price</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tfoot style="display:table-header-group">
+                <tr>
+                    <th></th>
+                    <th class="searchable">Name</th>
+                    <th class="searchable">Origin</th>
+                    <th class="searchable">Year Made</th>
+                    <th></th>
+                    <th></th>
+                    <th ></th>
+                    <th class="searchable">Price</th>
+                    <th></th>
+                </tr>
+            </tfoot>
+            <tbody class="table table-bordered"></tbody>
+        </table>
+    </div>
+    </div>
+    <script type="text/javascript" src="~/Scripts/bootstrap.js"></script>
+    <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+    @section scripts{
+        <script src="//cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.21.0/moment.min.js"></script>
 
-<div style="width:1250px">
-    <table id="Table" class="table table-striped">
-        <thead>
-            <tr>
-                <th>Code</th>
-                <th>Name</th>
-                <th>Origin</th>
-                <th>Year Made</th>
-                <th>Category</th>
-                <th>Shop</th>
-                <th>Quantity</th>
-                <th>Price</th>
-
-            </tr>
-        </thead>
-        <tfoot style="display:table-header-group">
-            <tr>
-                <th></th>
-                <th class="searchable">Name</th>
-                <th class="searchable">Origin</th>
-                <th class="searchable">Year Made</th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th class="searchable">Price</th>
-            </tr>
-        </tfoot>
-        <tbody class="table table-bordered"></tbody>
-    </table>
-</div>
-
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-<link href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css" rel="stylesheet" />
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
-@section scripts{
-
-    <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.21.0/moment.min.js"></script>
-    <script>
-        var Popup, dataTable;
+        <script>
         $(document).ready(function () {
             dataTable = $("#Table").DataTable({
                 "ajax": {
@@ -71,25 +73,51 @@
                     "dataSrc": ""
                 },
                 "columns": [
-                    { "data": "Code" },
+                    { 'data': 'id', defaultContent: '' },
                     { "data": "Name" },
                     { "data": "CountryOfOrigin" },
                     { "data": "Year" },
                     { "data": "Category" },
                     { "data": "FurnitureSalon" },
-                    { "data": "Amount" },
+                    { "data": "Amount"},
                     { "data": "Price" },
+
+                    {
+                        "data": "FurnitureId", sortable: false, render: function (data) {
+                            return "<div class='d-flex justify-content-center'><button id='buttonId' type='button' class='btn btn-info btn-sm'style ='color:white;'" +
+                                "onclick =PopUp(" + data + ")><i class='fa fa-shopping-cart'></i> Add to cart</a >";
+
+                        }
+                    },
+
                 ],
+                "columnDefs": [
+                    {
+                        "searchable": false,
+                        "orderable": false,
+                        "targets": 0
+
+                    },
+                ],
+                "order": [[1, 'asc']],
                 "language": {
-                    "emptyTable": "No data found",
+                    "emptyTable": "No data found"
                 },
                 "responsive": true,
                 "dom": 'lrtip'
+
             });
+
+
+             dataTable.on( 'order.dt search.dt', function () {
+            dataTable.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+            cell.innerHTML = i+1;
+                } );
+            } ).draw();
 
             $('.searchable').each(function () {
                 var title = $('#Table thead th').eq($(this).index()).text();
-                $(this).html('<input type="text" placeholder="Search ' + title + '" size="12"/>')
+                 $(this).html('<input class="form-control " type="text" placeholder="Search ' + title + ' " ' + ' style="width: 160px;"/>')
             });
 
             dataTable.columns().every(function () {
@@ -100,6 +128,8 @@
                 });
             })
         });
+
+
         function PopupForm(url) {
             var formDiv = $('.modal-body');
             $.get(url)
@@ -108,7 +138,20 @@
                     formDiv.html(response);
                 });
         }
-    </script>
 
-}
+         function PopUp (furnitureId){
+                $.ajax({
+                    type: "GET",
+                    url: '@Url.Action("AddToCart","ShoppingCart")/?furnitureId=' + furnitureId,
+                    success: function (data) {
+                        $('#user_content').load('@Url.Action("GetShoppingCart","ShoppingCart")');
+                        if (data.success) {
+                            dataTable.ajax.reload();
+                        }
+                    }
+                });
 
+        }
+          
+        </script>
+    }

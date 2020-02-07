@@ -14,5 +14,6 @@ namespace SmartInItProjekat.Repository
         void Add(Category category);
         void Update(Category category);
         void Delete(int id);
+        bool DoesNameExist(string name);
     }
 }

@@ -1,5 +1,4 @@
 ﻿@using Microsoft.AspNet.Identity
-@Styles.Render("~/Content/Navbar.css")
 @if (Request.IsAuthenticated)
 {
     using (Html.BeginForm("LogOut", "Account", "Log out", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
@@ -7,9 +6,6 @@
         @Html.AntiForgeryToken()
 
         <ul class="nav navbar-nav navbar-right ">
-            <li>
-                @Html.ActionLink("Change your password ", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage", @class = "nav-link" })
-            </li>
             <li><a class="nav-link" href="javascript:document.getElementById('logoutForm').submit()">Log out</a></li>
         </ul>
     }

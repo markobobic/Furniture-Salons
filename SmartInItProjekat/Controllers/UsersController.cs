@@ -34,6 +34,10 @@ namespace SmartInItProjekat.Controllers
         {
             _db = db;
         }
+        public ActionResult IndexBuyers()
+        {
+            return View("Buyers");
+        }
         public ActionResult Index()
         {
             return View();
@@ -43,9 +47,14 @@ namespace SmartInItProjekat.Controllers
             var data = _db.GetAll();
             return Json(data, JsonRequestBehavior.AllowGet);
         }
+        public ActionResult GetAllBuyers()
+        {
+            var data = _db.GetAllBuyers();
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
         public ActionResult Add()
         {
-            ViewBag.Name = _db.IncludeRoles();
+            ViewBag.Name = _db.IncludeRolesAdd();
             return View();
         }
         [HttpPost]
@@ -63,7 +72,7 @@ namespace SmartInItProjekat.Controllers
 
                 }
             }
-            ViewBag.Name = _db.IncludeRoles();
+            ViewBag.Name = _db.IncludeRolesAdd();
             return Index();
         }
         public ActionResult Details(string id)
@@ -102,12 +111,10 @@ namespace SmartInItProjekat.Controllers
                 return HttpNotFound();
             }
             IdentityRole role = _db.GetRole(id);
-            ViewBag.Name = _db.IncludeRoles();
+            ViewBag.Name = _db.IncludeRoles(id);
             ViewBag.Role = role.Name;
             return View(user);
         }
-
-       
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -128,10 +135,24 @@ namespace SmartInItProjekat.Controllers
             }
             return View(user);
         }
+
+        [HttpPost]
+        public ActionResult Delete(string id)
+        {
+            _db.Delete(id);
+            return Json(new { success = true, message = "Deleted Successfully" }, JsonRequestBehavior.AllowGet);
+        }
+
         [AllowAnonymous]
         public JsonResult DoesUserNameExist(string userName)
         {
             return Json(!_db.DoesExist(userName), JsonRequestBehavior.AllowGet);
         }
+        [AllowAnonymous]
+        public JsonResult DoesEmailExist(string Email)
+        {
+            return Json(!_db.DoesEmailExist(Email), JsonRequestBehavior.AllowGet);
+        }
+
     }
 }

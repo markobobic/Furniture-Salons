@@ -1,0 +1,175 @@
+﻿@using SmartInItProjekat.Models
+@model SmartInItProjekat.ViewModels.ShoppingCartViewModel
+@{
+    ViewBag.Title = "Your Cart";
+}
+
+
+
+<link rel="Stylesheet" href="@Href("~/Content/PopUp.css")" />
+
+<!-- Either add the classes 'show' and 'in' to the HTML -->
+<div class="modal fade show in">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button id="close-modal" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="thank-you-pop">
+                    <img src="https://cdn3.iconfinder.com/data/icons/basicolor-signs-warnings/24/182_warning_notice_error-512.png" alt="">
+                    <h1>
+                        We cannot cover your order.
+                        @foreach (var k in Model.ShoppingCart.Items.Where(x => x.Furniture.Amount < x.Quantity))
+                        {
+                            var result = k.Quantity - k.Furniture.Amount;
+                            var amount = k.Furniture.Amount;
+                            @: Please edit quantity of @result instances of  @k.Furniture.Name (our max is @amount) and procede with your buying.
+                        }
+                    </h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@{ int total = 0;}
+@{ bool isExceded = false;}
+@foreach (var k in Model.ShoppingCart.Items)
+{
+    int qua = k.Quantity;
+    total = k.Furniture.Amount;
+
+    if (total < qua)
+    {
+        isExceded = true;
+        if (isExceded == true)
+        {
+            <script>
+                $(".modal").modal("show");
+            </script>
+        }
+    }
+
+}
+<div id="user_content1"></div>
+<br />
+<h2 class="text-center main">Your orders</h2>
+<br />
+<div id="user_content"></div>
+
+<div class="modal fade" id="errorModal" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="mTitle">Shopping Cart</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p id="error"></p>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+<table class="container">
+    <thead>
+        <tr>
+            <th></th>
+            <th><h1>Quantity</h1></th>
+            <th><h1>Item</h1></th>
+            <th><h1>Price</h1></th>
+            <th><h1>Subtotal</h1></th>
+            <th><h1>Subtotal with TAX</h1></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.ShoppingCart.Items)
+        {
+            <tr>
+                <td class="text-center">
+                    @using (Html.BeginForm("AddToCart", "ShoppingCart"))
+                    {
+                        @Html.Hidden("FurnitureId", item.Furniture.FurnitureId)
+                        <input class="btn btn-sm btn-success"
+                               type="button" value="Edit Quantity" onclick="@("PopUp('"+item.Furniture.FurnitureId+"')")" />
+                    }
+                </td>
+                <td>@item.Quantity</td>
+                <td>@item.Furniture.Name</td>
+                <td>@item.Furniture.Price.ToString("c")</td>
+                <td>
+                    @((item.Quantity * item.Furniture.Price).ToString("c"))
+                </td>
+                <td>
+                    @(((item.Quantity * item.Furniture.Price) + (item.Furniture.Price * Tax.RegularTax) * item.Quantity).ToString("c"))
+                </td>
+
+                <td>
+                    @using (Html.BeginForm("RemoveFromCart", "ShoppingCart"))
+                    {
+                        @Html.Hidden("FurnitureId", item.Furniture.FurnitureId)
+                        <input class="btn btn-sm btn-success"
+                               type="submit" value="Remove" />
+                    }
+                </td>
+
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="4" class="text-right">Total:</td>
+            <td>
+                @Model.ShoppingCart.ComputeTotalValue().ToString("c")
+            </td>
+            <td>
+                @Model.ShoppingCart.ComputeTotalValueWithTax().ToString("c")
+            </td>
+            <td></td>
+            <td></td>
+        </tr>
+    </tfoot>
+</table>
+<div class="text-center">
+    @Html.ActionLink("Continue shopping", "Index", "Furnitures", null, new { @class = "btn btn-primary" })
+    @Html.ActionLink("Generete bill", "GenereteBill", "ShoppingCart", new { id = "generate", @class = "btn btn-primary" })
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="~/Content/Report.css" />
+      @section scripts{
+<script>
+        $('#generate').click(function (e) {
+            if (@Model.ShoppingCart.Items.Count()== 0) {
+                $("#error").html("Your shopping cart is empty!");
+                $('#errorModal').modal('show');
+                e.preventDefault();
+
+            }
+        });
+        function PopUp (furnitureId){
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("AddToCart","ShoppingCart")/?furnitureId=' + furnitureId,
+                    success: function (data) {
+                        $('#user_content').load('@Url.Action("EditQuantity","ShoppingCart")');
+                        if (data.success) {
+                            dataTable.ajax.reload();
+
+                        }
+                    }
+                });
+        }
+
+</script>
+}
+@*<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>*@
+

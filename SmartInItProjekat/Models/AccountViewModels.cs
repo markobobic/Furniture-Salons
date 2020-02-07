@@ -42,6 +42,7 @@ namespace SmartInItProjekat.Models
     public class ForgotViewModel
     {
         [Required]
+        [EmailAddress(ErrorMessage = "Invalid e-mail address.")]
         [Display(Name = "Email")]
         public string Email { get; set; }
     }
@@ -49,15 +50,19 @@ namespace SmartInItProjekat.Models
     public class LoginViewModel
     {
         [Required]
+        [StringLength(maximumLength: 50, MinimumLength = 4, ErrorMessage = "User name must be between 4 and 50 characters!")]
+        [RegularExpression(@"^(\d|\w)+$", ErrorMessage = "No spaces and special charachters!")]
         [Display(Name = "User Name")]
         public string UserName { get; set; }
 
         [Required]
+        [StringLength(maximumLength: 20, MinimumLength = 6, ErrorMessage = "Password must be between 6 and 20 characters!")]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }
 
-        [Display(Name = "Remember me?")]
+        
+        [Display(Name = "Password")]
         public bool RememberMe { get; set; }
     }
 
@@ -65,38 +70,48 @@ namespace SmartInItProjekat.Models
     {
         [Display(Name = "User Roles")]
         public string UserRole { get; set; }
-
-        [Required]
-        [StringLength(50, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 2)]
+        [DisplayFormat(ConvertEmptyStringToNull = false)]
+        [RegularExpression(@"^\w+( +\w+)*$|", ErrorMessage = "Spaces can only exist beetween words")]
         [Display(Name = "First Name")]
+        [StringLength(maximumLength: 50, MinimumLength = 2, ErrorMessage = "First name must be between 6 and 50 characters!")]
+        [Required(ErrorMessage = "You must provide first name")]
         public string FirstName { get; set; }
 
-        [Required]
-        [StringLength(50, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 2)]
+        [DisplayFormat(ConvertEmptyStringToNull = false)]
+        [RegularExpression(@"^\w+( +\w+)*$|", ErrorMessage = "Spaces can only exist beetween words")]
         [Display(Name = "Last Name")]
+        [StringLength(maximumLength: 50, MinimumLength = 2, ErrorMessage = "Last name must be between 6 and 50 characters!")]
+        [Required(ErrorMessage = "You must provide last name")]
         public string LastName { get; set; }
 
-        [Required]
-        [Display(Name = "Address")]
+        [DisplayFormat(ConvertEmptyStringToNull = false)]
+        [RegularExpression(@"^\w+( +\w+)*$|", ErrorMessage = "Spaces can only exist beetween words")]
+        [Required(ErrorMessage = "You must provide address")]
+        [Display(Name = "Address ")]
+        [StringLength(maximumLength: 50, MinimumLength = 2, ErrorMessage = "Name must be between 2 and 50 characters!")]
         public string Address { get; set; }
 
         [Required]
-        [EmailAddress]
+        [System.Web.Mvc.Remote("DoesEmailExist", "Users", ErrorMessage = "E-mail address already exists!")]
+        [EmailAddress(ErrorMessage ="Invalid e-mail address.")]
         [Display(Name = "Email")]
         public string Email { get; set; }
 
         [Required]
+        [StringLength(maximumLength: 50, MinimumLength = 4, ErrorMessage = "User name must be between 2 and 50 characters!")]
+        [RegularExpression(@"^(\d|\w)+$",ErrorMessage = "No spaces and special charachters!")]
         [Display(Name = "User Name")]
-       [System.Web.Mvc.Remote("DoesUserNameExist", "Users", ErrorMessage = "User Name already exists!")]
+        [System.Web.Mvc.Remote("DoesUserNameExist", "Users", ErrorMessage = "User Name already exists!")]
         public string UserName { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [StringLength(maximumLength: 20, MinimumLength = 6, ErrorMessage = "Password must be between 5 and 20 characters!")]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
+        [StringLength(maximumLength: 20, MinimumLength = 6, ErrorMessage = "Password must be between 5 and 20 characters!")]
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
@@ -105,17 +120,18 @@ namespace SmartInItProjekat.Models
     public class ResetPasswordViewModel
     {
         [Required]
-        [EmailAddress]
+        [EmailAddress(ErrorMessage = "Invalid e-mail address.")]
         [Display(Name = "Email")]
         public string Email { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [StringLength(maximumLength: 20, MinimumLength = 6, ErrorMessage = "Password must be between 5 and 20 characters!")]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
+        [StringLength(maximumLength: 20, MinimumLength = 6, ErrorMessage = "Password must be between 6 and 20 characters!")]
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
@@ -126,7 +142,7 @@ namespace SmartInItProjekat.Models
     public class ForgotPasswordViewModel
     {
         [Required]
-        [EmailAddress]
+        [EmailAddress(ErrorMessage = "Invalid e-mail address.")]
         [Display(Name = "Email")]
         public string Email { get; set; }
     }

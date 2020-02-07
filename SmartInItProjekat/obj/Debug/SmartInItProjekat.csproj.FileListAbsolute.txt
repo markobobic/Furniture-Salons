@@ -243,3 +243,7 @@ C:\Users\Marko\source\repos\SmartInItProjekat\SmartInItProjekat\obj\Debug\SmartI
 C:\Users\Marko\source\repos\SmartInItProjekat\SmartInItProjekat\obj\Debug\SmartInItProjekat.csproj.CopyComplete
 C:\Users\Marko\source\repos\SmartInItProjekat\SmartInItProjekat\obj\Debug\SmartInItProjekat.dll
 C:\Users\Marko\source\repos\SmartInItProjekat\SmartInItProjekat\obj\Debug\SmartInItProjekat.pdb
+C:\Users\Marko\source\repos\SmartInItProjekat\SmartInItProjekat\obj\Debug\SmartInItProjekat.Migrations.ValidationUpdate.resources
+C:\Users\Marko\source\repos\SmartInItProjekat\SmartInItProjekat\obj\Debug\SmartInItProjekat.Migrations.ValidationUpdate2.resources
+C:\Users\Marko\source\repos\SmartInItProjekat\SmartInItProjekat\obj\Debug\SmartInItProjekat.Migrations.RegexUpdate.resources
+C:\Users\Marko\source\repos\SmartInItProjekat\SmartInItProjekat\obj\Debug\SmartInItProjekat.Migrations.Regex.resources

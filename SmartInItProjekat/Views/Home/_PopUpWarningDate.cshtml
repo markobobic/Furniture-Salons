@@ -1,0 +1,33 @@
+﻿
+<div class="container">
+    <div class="row">
+        <div class="modal fade" id="ignismyModal" role="dialog">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    </div>
+                    <button id="close-modal" type="button" class="close" data-dismiss="modal" aria-label="Close" style=" position:absolute;">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <div class="modal-body">
+                        <div class="thank-you-pop">
+                            <img src="https://cdn3.iconfinder.com/data/icons/basicolor-signs-warnings/24/182_warning_notice_error-512.png" alt="">
+                            <h1>Invalid date.</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(".modal-backdrop").remove();
+    $("#ignismyModal").modal('show');
+    
+</script>
+<link rel="Stylesheet" href="@Href("~/Content/PopUp.css")" />
+
+<style>
+  
+</style>
+

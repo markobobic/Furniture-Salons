@@ -4,7 +4,6 @@
     ViewBag.Title = "Shoping Centar";
 }
 
-<h2 class="">Shoping Online Centar</h2>
 <br />
 <div class="bg"></div>
 <div class="">
@@ -34,17 +33,19 @@
     </div>
 }
 
-<table id="Table" class="table table-striped table-bordered" style="width:100%">
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Category</th>
-            <th>Amount in Store</th>
-            <th>Price</th>
-        </tr>
-    </thead>
-    <tbody></tbody>
-</table>
+<div class="table-responsive">
+    <table id="Table" class="table table-striped table-hover dt-responsive display nowrap" cellspacing="0">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Amount in Store</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.slim.min.js"></script>
 <link rel="stylesheet" href="~/Content/bootstrap-minty.css">
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
@@ -105,8 +106,8 @@
             <span class="sr-only">Next</span>
         </a>
     </div>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.4.1/minty/bootstrap.min.css" />
+    <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
 
 
@@ -114,6 +115,7 @@
 @section scripts{
     <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.21.0/moment.min.js"></script>
+
 
     <script>
         $('#Table').hide();

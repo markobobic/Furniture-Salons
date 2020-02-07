@@ -67,5 +67,20 @@ namespace SmartInItProjekat.Repository
             Dispose(true);
             GC.SuppressFinalize(this);
         }
+
+        public bool DoesAccountNumberExist(string accountNumber)
+        {
+            return db.FurnitureSalons.Any(x => x.AccountNumber == accountNumber);
+        }
+
+        public bool DoesPIBExist(string PIB)
+        {
+            return db.FurnitureSalons.Any(x => x.PIB == PIB);
+        }
+        public bool DoesEmailExist(string email)
+        {
+            return db.FurnitureSalons.Any(x => x.Email == email);
+        }
+
     }
 }

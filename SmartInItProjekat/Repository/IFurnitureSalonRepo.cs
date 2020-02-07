@@ -15,6 +15,8 @@ namespace SmartInItProjekat.Repository
         Task Update(FurnitureSalon furnitureSalon);
         void Delete(int id);
          Task SaveAsync();
-
+        bool DoesAccountNumberExist(string accountNumber);
+        bool DoesPIBExist(string pibNumber);
+        bool DoesEmailExist(string email);
     }
 }

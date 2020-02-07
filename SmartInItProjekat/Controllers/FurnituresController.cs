@@ -37,6 +37,7 @@ namespace SmartInItProjekat.Controllers
             return View(furniture);
         }
         [Authorize(Roles ="Admin")]
+     
         public ActionResult Add()
         {
             ViewBag.CategoryId = _db.IncludeCategory();
@@ -45,14 +46,12 @@ namespace SmartInItProjekat.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Add(Furniture furniture)
+        public ActionResult Add(Furniture furniture)
         {
             if (ModelState.IsValid)
             {
-               await _db.Add(furniture);
-                await _db.SaveAsync();
-                TempData["SuccessMsgFurnitureAdd"] = "Record Saved Successfully";
-                return Index();
+                _db.Add(furniture);
+                return Json(new { success = true, message = "Added Successfully" });
             }
             ViewBag.CategoryId =  _db.IncludeCategory();
             ViewBag.FurnitureSalonId =  _db.IncludeFurnitureSalon();
@@ -81,15 +80,9 @@ namespace SmartInItProjekat.Controllers
         {
             if (ModelState.IsValid)
             {
-                bool updated = _db.Update(furniture);
-                if (updated)
-                {
-                    TempData["SuccessMsgFurnitureUpdate"] = "Record Saved Successfully";
-                    return RedirectToAction("Index");
-                }
+                _db.Update(furniture);
+                return Json(new { success = true, message = "Updated Successfully" }, JsonRequestBehavior.AllowGet);
             }
-            ViewBag.CategoryId =  _db.IncludeCategory();
-            ViewBag.FurnitureSalonId =  _db.IncludeFurnitureSalon();
             return View(furniture);
         }
         [HttpPost]
@@ -112,9 +105,7 @@ namespace SmartInItProjekat.Controllers
                 Category = s.Category.Name,
                 FurnitureSalon = s.FurnitureSalon.Name,
                 s.Amount,
-                s.Price,
-                ProductImage = s.ProductImage != null ? Convert.ToBase64String(s.ProductImage) : null,
-                s.PhotoType
+                s.Price
             });
 
             return this.Json(data, JsonRequestBehavior.AllowGet);
@@ -136,7 +127,10 @@ namespace SmartInItProjekat.Controllers
 
             return this.Json(data, JsonRequestBehavior.AllowGet);
         }
-        
-        
+        public JsonResult DoesCodeExist(string code)
+        {
+            return Json(!_db.DoesCodeExist(code), JsonRequestBehavior.AllowGet);
+        }
+
     }
 }

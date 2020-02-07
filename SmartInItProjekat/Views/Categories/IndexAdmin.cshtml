@@ -1,0 +1,172 @@
+﻿
+@{
+    ViewBag.Title = "List of Categories";
+}
+<br />
+<h2 class="text-center main">Furniture categories</h2>
+<br />
+<div class="modal fade" id="modalAdd" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="mTitle">Category</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+<div class="text-center">
+    <a class="btn btn-success" id="btn" style="margin-bottom:10px;color:white" data-toggle="modal"
+       data-target="#modalAdd"
+       onclick="PopupForm('@Url.Action("Add","Categories")')"><i class="fa fa-plus"></i> Add New </a>
+</div>
+<div id="user_content"></div>
+<div class="row">
+    <div class="table-responsive">
+        <table id="Table" width="60%">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Category</th>
+                    <th>Description</th>
+                    <th></th>
+                </tr>
+            </thead>
+
+            <tbody class="table table-bordered"></tbody>
+        </table>
+    </div>
+    </div>
+<style>
+    .dataTables_wrapper {
+        margin: 0 auto;
+        width: 20%;
+    }
+    
+</style>
+
+    <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    @section Scripts{
+        <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.21.0/moment.min.js"></script>
+        <script src="https://rawgit.com/makeusabrew/bootbox/f3a04a57877cab071738de558581fbc91812dce9/bootbox.js"></script>
+        <script>
+        $(document).ready(function () {
+             aync:true
+        dataTable = $("#Table").DataTable({
+                "ajax": {
+                    "url": "/Categories/GetData/",
+                    "type": "GET",
+                    "datatype": "json",
+                    "dataSrc": ""
+                    
+                },
+            "columns": [
+                    { 'data': 'id', defaultContent: '' },
+                    { "data": "Name", "searchable": false },
+                    { "data": "Description", "searchable": false },
+                    {
+                        "data": "CategoryId", "width": "22%", sortable:false, render: function(data) {
+                            return "<a class='btn btn-outline-info btn-block btn-sm'" +
+                                    "data-toggle='modal' data-target='#modalAdd'onclick=PopupForm('@Url.Action("Update","Categories")/" +
+                                data + "')><i class='fa fa-pencil'></i>Update</a><a class='btn btn-outline-success btn-block btn-sm' data-toggle='modal' data-target='#modalAdd'" +
+                                    "onclick=PopupForm('@Url.Action("Details","Categories")/" +
+                                data + "')><i class='fa fa-list'></i> Details</a ><a class='btn btn-outline-danger btn-block btn-sm'" +
+                                    " onclick=Delete('" + data + "')><i class='fa fa-trash'></i> Delete</a>";
+                        }
+
+                    }
+                ],
+                 "columnDefs": [
+                    {
+                        "searchable": false,
+                        "orderable": false,
+                        "targets": 0
+                    },
+                ],
+                "language": {
+                    "emptyTable": "No data found",
+                    
+                },
+            "responsive": true,
+                "sDom":"ltipr"
+            });
+
+           dataTable.on( 'order.dt search.dt', function () {
+            dataTable.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+            cell.innerHTML = i+1;
+                } );
+            } ).draw();
+              });
+         function PopupForm(url) {
+            var formDiv = $('.modal-body');
+            $.get(url)
+                .done(function (response) {
+                    var modal = $(this);
+                    formDiv.html(response);
+                });
+        }
+
+       function SubmitForm(form) {
+            $.validator.unobtrusive.parse(form);
+            if ($(form).valid()) {
+                $.ajax({
+                    type: "POST",
+                    url: form.action,
+                    data: $(form).serialize(),
+                    success: function (data) {
+                         if (data.success) {
+                            $("#modalAdd").modal('hide');
+                             dataTable.ajax.reload();
+                             $('#user_content').load('@Url.Action("PopUpSubmission","Home")');
+                             $(".modal-backdrop").remove();
+                        }
+                    }
+                });
+            }
+            return false;
+        }
+
+       function Delete(id) {
+    bootbox.confirm({
+        message: "Are you sure you want to delete?",
+        buttons: {
+            cancel: {
+                label: 'No',
+                className: 'btn-danger'
+            },
+            confirm: {
+                label: 'Yes',
+                className: 'btn-success'
+            }
+        },
+        callback: function(result) {
+            if (result) {
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("Delete", "Categories")/' + id,
+                    success: function(data) {
+                        if (data.success) {
+                            dataTable.ajax.reload();
+                            $('#user_content').load('@Url.Action("PopUpDelete","Home")');
+
+                        }
+                    }
+                });
+            }
+        }
+    });
+
+}
+
+        </script>
+    }
+

@@ -1,0 +1,91 @@
+﻿@model IEnumerable<SmartInItProjekat.Models.Bill>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<br />
+<h2 class="text-center main">Bills</h2>
+<br />
+<div class="row">
+    <div class="table-responsive">
+        <table id="Table" width="100%">
+            <thead>
+                <tr>
+                    <th>Bill Id</th>
+                    <th>Buyer</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Subtotal</th>
+                    <th>Total Tax</th>
+                    <th>Total Price</th>
+                    <th>Items</th>
+                    <th>Furniture Salons</th>
+                </tr>
+            </thead>
+
+        </table>
+    </div>
+    </div>
+    <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+
+    @section scripts{
+        <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.21.0/moment.min.js"></script>
+
+        <script>
+            $(document).ready(function () {
+                dataTable = $("#Table").DataTable({
+                    "ajax": {
+                        "url": "/Bills/GetAllData/",
+                        "type": "GET",
+                        "datatype": "json",
+                        "dataSrc": ""
+                    },
+                    "columns": [
+                        { "data": "BillId", "searchable": false },
+                        { "data": "Buyer" },
+                        {
+                            "data": "TimeOfPurchase", render: function (data) {
+                                return moment(data).format("DD.MM.YYYY.")
+                            }
+                        },
+                        {
+                            "data": "TimeOfPurchase", "searchable": false, render: function (data) {
+                                return moment(data).format("HH:mm:ss")
+                            }
+                        },
+                        { "data": "Subtotal", "searchable": false, render: $.fn.dataTable.render.number('.', ',', 2, '', " $") },
+                        { "data": "TotalTax", "searchable": false, render: $.fn.dataTable.render.number('.', ',', 2, '', " $") },
+
+                        { "data": "TotalPrice", "searchable": false, render: $.fn.dataTable.render.number('.', ',', 2, '', " $") },
+                        {
+                            "data": "BillItems", "searchable": false, render: function (data) {
+                                var str = "";
+                                for (var i = 0; i < data.length; i++) {
+                                    str += data[i].Item + ", ";
+                                }
+                                return str.split(", ").join("<br/>");
+                            }
+                        },
+                        {
+                            "data": "FurnitureShops", render: function (data) {
+                                var str = "";
+                                for (var i = 0; i < data.length; i++) {
+                                    str += data[i].Shop + ", ";
+                                }
+                                return str.split(", ").join("<br/>");
+                            }
+                        },
+                    ],
+                    "language": {
+                        "emptyTable": "No data found"
+                    },
+                   "responsive": true,
+                    "sDom":"ltipr"
+                });
+
+            });</script>
+    }
+

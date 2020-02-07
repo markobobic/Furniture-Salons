@@ -4,13 +4,11 @@
     Layout = null;
 }
 
-@using (Html.BeginForm("Add", "Furnitures", FormMethod.Post, new { onsubmit = "return SumbitForm(this)" }))
+@using (Html.BeginForm("Add", "Furnitures", FormMethod.Post, new { onsubmit = "return SubmitForm(this)" }))
 {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>Add</h4>
-        <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
             @Html.LabelFor(model => model.Code, htmlAttributes: new { @class = "control-label col-md-6" })
@@ -23,91 +21,91 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-6" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                <input onkeypress="return ((event.charCode >= 65 &amp;&amp; event.charCode <= 90) || (event.charCode >= 97 &amp;&amp; event.charCode <= 122) || (event.charCode == 32))"
+                       class="form-control text-box single-line valid" data-val="true" data-val-length="Name must be between 6 and 50 characters!"
+                       data-val-length-max="50" data-val-length-min="2" data-val-regex="Spaces can only exist beetween words" data-val-regex-pattern="^\w+( +\w+)*$|"
+                       data-val-required="You must provide furniture name" id="Name" name="Name" type="text" value="" aria-describedby="Name-error" aria-invalid="false">
                 @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
             </div>
         </div>
+    </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.CountryOfOrigin, htmlAttributes: new { @class = "control-label col-md-6" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.CountryOfOrigin, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.CountryOfOrigin, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Year, htmlAttributes: new { @class = "control-label col-md-6" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Year, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Year, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label col-md-6" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Amount, htmlAttributes: new { @class = "control-label col-md-6" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Amount, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Amount, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.FurnitureSalonId, "Furniture Salon", htmlAttributes: new { @class = "control-label col-md-6" })
-            <div class="col-md-10">
-                @Html.DropDownList("FurnitureSalonId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.FurnitureSalonId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.CategoryId, "Category", htmlAttributes: new { @class = "control-label col-md-6" })
-            <div class="col-md-10">
-                @Html.DropDownList("CategoryId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        @if (Html.HasValidationMessageFor(model => model.Code))
-        {
-            <script>
-                alert("You need to provide unique Code. Try again.");
-            </script>
-        }
-
-
-        @*<div class="form-group">
-                <div style="position:relative;">
-                    @Html.LabelFor(model => model.ProductImage, "Photo", htmlAttributes: new { @class = "control-label col-md-6" })
-                    <div class="col-md-10">
-                        <a class="btn btn-outline-success" href="javascript:;">
-                            Upload photo...
-                            <input type="file" name="image" size="40"
-                                   style="position:absolute;z-index:2;top:0;
-                                   left:0;filter: alpha(opacity=0);opacity:0;
-                                   background-color:transparent;color:transparent;"
-                                   onchange='$("#upload-file-info").html($(this).val());' />
-                        </a>
-                        <span class="label label-info" id="upload-file-info"></span>
-                    </div>
-                </div><br />
-            </div>*@
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Add Furniture" />
-                <button type="button" data-dismiss="modal" aria-label="Close">Cancel</button>
-            </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.CountryOfOrigin, htmlAttributes: new { @class = "control-label col-md-6" })
+        <div class="col-md-10">
+            <input onkeypress="return ((event.charCode >= 65 &amp;&amp; event.charCode <= 90) || (event.charCode >= 97 &amp;&amp; event.charCode <= 122) || (event.charCode == 32))"
+                   class="form-control text-box single-line" data-val="true" data-val-length="Country must be between 2 and 50 characters!" data-val-length-max="50"
+                   data-val-length-min="2" data-val-regex="Spaces can only exist beetween words" data-val-regex-pattern="^\w+( +\w+)*$" data-val-required="You must provide country"
+                   id="CountryOfOrigin" name="CountryOfOrigin" type="text" value="">
+            @Html.ValidationMessageFor(model => model.CountryOfOrigin, "", new { @class = "text-danger" })
         </div>
     </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Year, htmlAttributes: new { @class = "control-label col-md-6" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Year, new { htmlAttributes = new { @class = "form-control", id = "year", type = "text" } })
+            @Html.ValidationMessageFor(model => model.Year, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label col-md-6" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Amount, htmlAttributes: new { @class = "control-label col-md-6" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Amount, new { htmlAttributes = new { @class = "form-control", id = "amount" } })
+            @Html.ValidationMessageFor(model => model.Amount, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.FurnitureSalonId, "Furniture Salon", htmlAttributes: new { @class = "control-label col-md-6" })
+        <div class="col-md-10">
+            @Html.DropDownList("FurnitureSalonId", null, htmlAttributes: new { @class = "form-control", required=" "  })
+            @Html.ValidationMessageFor(model => model.FurnitureSalonId, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.CategoryId, "Category", htmlAttributes: new { @class = "control-label col-md-6", required=" " })
+        <div class="col-md-10">
+            @Html.DropDownList("CategoryId", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+    @*<div class="form-group">
+            <div style="position:relative;">
+                @Html.LabelFor(model => model.ProductImage, "Photo", htmlAttributes: new { @class = "control-label col-md-6" })
+                <div class="col-md-10">
+                    <a class="btn btn-outline-success" href="javascript:;">
+                        Upload photo...
+                        <input type="file" name="image" size="40"
+                               style="position:absolute;z-index:2;top:0;
+                               left:0;filter: alpha(opacity=0);opacity:0;
+                               background-color:transparent;color:transparent;"
+                               onchange='$("#upload-file-info").html($(this).val());' />
+                    </a>
+                    <span class="label label-info" id="upload-file-info"></span>
+                </div>
+            </div><br />
+        </div>*@
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" class="btn btn-success" value="Save" />
+            <button type="button" class="btn btn-default" data-dismiss="modal" aria-label="Close">Cancel</button>
+        </div>
+    </div>
+
 
     <script src="@Url.Content("~/Scripts/jquery.validate.min.js")"
             type="text/javascript">
@@ -116,5 +114,4 @@
     <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")"
             type="text/javascript">
     </script>
-    @Styles.Render("~/Content/bootstrap-minty.css")
 }

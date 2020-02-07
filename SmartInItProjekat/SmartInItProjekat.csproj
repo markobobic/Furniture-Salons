@@ -384,11 +384,13 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BillsController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\FurnitureSalonsController.cs" />
     <Compile Include="Controllers\FurnituresController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\ShoppingCartController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -396,6 +398,8 @@
     <Compile Include="Helper\Hasher.cs" />
     <Compile Include="Helper\HtmlHelper.cs" />
     <Compile Include="Helper\Unique.cs" />
+    <Compile Include="Infrastructure\ShoppingCart.cs" />
+    <Compile Include="Infrastructure\ShoppingCartModelBinder.cs" />
     <Compile Include="Migrations\201912242011005_Initilize.cs" />
     <Compile Include="Migrations\201912242011005_Initilize.Designer.cs">
       <DependentUpon>201912242011005_Initilize.cs</DependentUpon>
@@ -408,6 +412,22 @@
     <Compile Include="Migrations\201912251402307_Typo.Designer.cs">
       <DependentUpon>201912251402307_Typo.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202001280313113_ValidationUpdate.cs" />
+    <Compile Include="Migrations\202001280313113_ValidationUpdate.Designer.cs">
+      <DependentUpon>202001280313113_ValidationUpdate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001280458032_ValidationUpdate2.cs" />
+    <Compile Include="Migrations\202001280458032_ValidationUpdate2.Designer.cs">
+      <DependentUpon>202001280458032_ValidationUpdate2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001282153463_RegexUpdate.cs" />
+    <Compile Include="Migrations\202001282153463_RegexUpdate.Designer.cs">
+      <DependentUpon>202001282153463_RegexUpdate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001282210083_Regex.cs" />
+    <Compile Include="Migrations\202001282210083_Regex.Designer.cs">
+      <DependentUpon>202001282210083_Regex.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Bill.cs" />
@@ -418,16 +438,22 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\RoleName.cs" />
+    <Compile Include="Models\Tax.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\BillRepo.cs" />
     <Compile Include="Repository\CategoriesRepo.cs" />
     <Compile Include="Repository\FurnitureRepo.cs" />
     <Compile Include="Repository\FurnitureSalonRepo.cs" />
+    <Compile Include="Repository\IBillRepo.cs" />
     <Compile Include="Repository\ICategoriesRepo.cs" />
     <Compile Include="Repository\IFurnitureRepo.cs" />
     <Compile Include="Repository\IFurnitureSalonRepo.cs" />
     <Compile Include="Repository\IUsers.cs" />
     <Compile Include="Repository\UsersRepo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\BillViewModel.cs" />
+    <Compile Include="ViewModels\ReportViewModel.cs" />
+    <Compile Include="ViewModels\ShoppingCartViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -435,11 +461,13 @@
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-minty.css" />
+    <Content Include="Content\bootstrap-minty.min.css" />
     <Content Include="Content\bootstrap-notify.css" />
     <Content Include="Content\bootstrap-reboot.css" />
     <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Footer.css" />
     <Content Include="Content\Images\furniture-store-icon-detailed-set-shops-hypermarket-icons-premium-quality-graphic-design-one-collection-icons-111357589.jpg" />
     <Content Include="Content\Images\FurnitureSalon1.jpg" />
     <Content Include="Content\Images\FurnitureSalon2.jpg" />
@@ -454,11 +482,14 @@
     <Content Include="Content\Images\s62-jira0718-beer.jpg" />
     <Content Include="Content\Images\slider3.jpg" />
     <Content Include="Content\IndexAuth.css" />
+    <Content Include="Content\jquery-ui.min.css" />
     <Content Include="Content\Navbar.css" />
     <Content Include="Content\notify.css" />
     <Content Include="Content\notify.min.css" />
     <Content Include="Content\PaginationStyle.css" />
     <Content Include="Content\PopUp.css" />
+    <Content Include="Content\Proba.css" />
+    <Content Include="Content\Report.css" />
     <Content Include="Content\styles\alert-bangtidy.css" />
     <Content Include="Content\styles\alert-blackgloss.css" />
     <Content Include="favicon.ico" />
@@ -490,6 +521,7 @@
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery-notify.js" />
     <Content Include="Scripts\jquery-notify.min.js" />
+    <Content Include="Scripts\jquery-ui.min.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
@@ -566,6 +598,28 @@
     <Content Include="Views\Home\_PopUpUpdate.cshtml" />
     <Content Include="Views\Home\_PopUpDelete.cshtml" />
     <Content Include="Views\Home\_PopUpSubmission.cshtml" />
+    <Content Include="Views\Users\Buyers.cshtml" />
+    <Content Include="Views\Categories\Update.cshtml" />
+    <Content Include="Views\Categories\IndexAdmin.cshtml" />
+    <Content Include="Views\Categories\IndexBuyer.cshtml" />
+    <Content Include="Views\Bills\Bill.cshtml" />
+    <Content Include="Views\Bills\BillsList.cshtml" />
+    <Content Include="Views\Bills\FormSubmit.cshtml" />
+    <Content Include="Views\Bills\GenerateReport.cshtml" />
+    <Content Include="Views\ShoppingCart\Summary.cshtml" />
+    <Content Include="Views\ShoppingCart\Index.cshtml" />
+    <Content Include="Views\Home\Proba.cshtml" />
+    <Content Include="Views\Shared\Footer.cshtml" />
+    <Content Include="Views\Shared\FooterAdmin.cshtml" />
+    <Content Include="Views\Home\_PopUpWarning.cshtml" />
+    <Content Include="Views\Bills\DateError.cshtml" />
+    <Content Include="Views\Home\_PopUpWarningDate.cshtml" />
+    <Content Include="Views\Home\_PopUpWarnigStartEndDate.cshtml" />
+    <Content Include="Views\ShoppingCart\OrderSubmited.cshtml" />
+    <Content Include="Views\ShoppingCart\OutOfLimit.cshtml" />
+    <Content Include="Views\ShoppingCart\GetShoppingCart.cshtml" />
+    <Content Include="Views\ShoppingCart\Loading.cshtml" />
+    <Content Include="Views\ShoppingCart\EditQuantity.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
@@ -580,6 +634,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912251402307_Typo.resx">
       <DependentUpon>201912251402307_Typo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001280313113_ValidationUpdate.resx">
+      <DependentUpon>202001280313113_ValidationUpdate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001280458032_ValidationUpdate2.resx">
+      <DependentUpon>202001280458032_ValidationUpdate2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001282153463_RegexUpdate.resx">
+      <DependentUpon>202001282153463_RegexUpdate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001282210083_Regex.resx">
+      <DependentUpon>202001282210083_Regex.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

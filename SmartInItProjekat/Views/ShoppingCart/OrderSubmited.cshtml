@@ -1,0 +1,49 @@
+﻿
+@{
+    ViewBag.Title = "Order Completed";
+}
+<br />
+<br />
+
+    <div class="text-center">
+        <span id="span">
+
+            Your order has been submited. <br />
+            Thank you for purchasing our products!
+            Click <a id="link" href="/Furnitures">here</a> to go back to our products!
+
+        </span>
+    </div>
+<br />
+<p></p>
+<img class="center" src="https://as2.ftcdn.net/jpg/02/01/57/63/1000_F_201576326_5xZsGxUEld7nlGWNhulcGDnaf6JlIBqE.jpg" />
+<p>
+    @Html.ActionLink("Back to List", "Index", "Furnitures")
+</p>
+
+<style>
+    .center {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 50%;
+        }
+
+        #span {
+            color: #28AE7B;
+            text-align: center;
+            font-weight:900;
+            font-size:2em;
+        }
+
+        #link {
+            color: blue;
+            text-decoration: underline;
+            font-weight: bold;
+        }
+</style>
+<script>
+    window.location.hash = "no-back-button";
+    window.location.hash = "Again-No-back-button";
+    window.onhashchange = function () { window.location.hash = "no-back-button"; }
+</script> 
